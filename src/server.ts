@@ -1,7 +1,7 @@
-import { timingSafeEqual } from "node:crypto";
 import { WorkLimiter, runtimeLimits, registerRpcLimiter } from "./runtime-limits.js";
 import { createServer, type Server, type ServerResponse } from "node:http";
 import { readFile } from "node:fs/promises";
+import { pipeline } from "node:stream/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { DEFAULT_RPC_URL, ROBINHOOD_CHAIN_ID, fetchLiveSnapshot, createLiveDiscoveryCache, type LiveSnapshot, type RpcCaller } from "./live.js";
@@ -9,6 +9,8 @@ import { DEFAULT_RPC_URL, ROBINHOOD_CHAIN_ID, fetchLiveSnapshot, createLiveDisco
 import { PaperQuoteService } from "./paper-quotes.js";
 import { PaperStore } from "./paper-store.js";
 import { PaperService } from "./paper-service.js";
+import { PaperExport } from "./paper-export.js";
+import { exportAuthenticated, exportPasswordMatches, exportSessionCookie } from "./paper-export-auth.js";
 
 async function readJsonBody(request: import("node:http").IncomingMessage): Promise<unknown> {
   let body = "";
@@ -118,7 +120,7 @@ export function createHttpRpcCaller(url?: string, options: RpcCallerOptions = {}
 }
 
 function send(response: ServerResponse, status: number, type: string, body: string): void {
-  response.writeHead(status, { ...SECURITY_HEADERS, "content-type": type, "cache-control": type.includes("html") ? "no-store" : "no-cache" });
+  response.writeHead(status, { ...SECURITY_HEADERS, "content-type": type, "cache-control": type.includes("json") ? "private, no-store" : type.includes("html") ? "no-store" : "no-cache" });
   response.end(body);
 }
 
@@ -160,6 +162,8 @@ export function createDeskServer(options: DeskServerOptions = {}): Server {
   const paperKey = options.paperDirectory ? resolve(options.paperDirectory) : undefined;
   if (paperKey && activeServers.has(paperKey)) return activeServers.get(paperKey)!;
   let paper: PaperService | undefined;
+  let paperExport: PaperExport | undefined;
+  const exportAttempts=new Map<string,{count:number;until:number}>();
   let paperError: string | null = null;
   const paperReady = options.paperDirectory ? PaperStore.open(options.paperDirectory).then(async store => {
     try {
@@ -191,6 +195,51 @@ export function createDeskServer(options: DeskServerOptions = {}): Server {
     try {
       const requestUrl = new URL(request.url ?? "/", "http://localhost");
       const path = requestUrl.pathname;
+      if(path.startsWith('/api/paper')) {
+        await paperReady;
+        if(path==='/api/paper/export/session') {
+          if(request.method!=='POST'){send(response,405,'application/json',JSON.stringify({error:'POST required'}));return;}
+          if(!isSameOrigin(request)){send(response,403,'application/json',JSON.stringify({error:'Same-origin request required'}));return;}
+          if(!paper || paper.store.strategyVersion()!==5){send(response,409,'application/json',JSON.stringify({error:'V5 account required'}));return;}
+          if(!process.env.PAPER_EXPORT_TOKEN){send(response,503,'application/json',JSON.stringify({error:'The V5 owner must configure PAPER_EXPORT_TOKEN before access is enabled.'}));return;}
+          if(!request.headers['content-type']?.startsWith('application/json')){send(response,415,'application/json',JSON.stringify({error:'JSON required'}));return;}
+          const ip=request.socket.remoteAddress??'unknown',now=Date.now();
+          for(const [key,value] of exportAttempts)if(value.until<=now)exportAttempts.delete(key);
+          const attempt=exportAttempts.get(ip)??{count:0,until:now+60_000};
+          if(attempt.count>=10 || (!exportAttempts.has(ip) && exportAttempts.size>=128)){send(response,429,'application/json',JSON.stringify({error:'Too many unlock attempts. Try again in a minute.'}));return;}
+          let body:unknown;try{body=await readJsonBody(request);}catch{send(response,400,'application/json',JSON.stringify({error:'Invalid unlock request'}));return;}
+          const password=body && typeof body==='object' && 'password' in body?(body as {password:unknown}).password:null;
+          if(typeof password!=='string' || !exportPasswordMatches(password)){attempt.count++;exportAttempts.set(ip,attempt);send(response,403,'application/json',JSON.stringify({error:'Incorrect access password'}));return;}
+          exportAttempts.delete(ip);
+          response.setHeader('set-cookie',exportSessionCookie(request));
+          send(response,200,'application/json',JSON.stringify({authenticated:true}));return;
+        }
+        const isExport=path.startsWith('/api/paper/export');
+        const v5=paper?.store.strategyVersion()===5;
+        if((isExport || v5) && !exportAuthenticated(request)) {
+          send(response,path==='/api/paper/export'?403:401,'application/json',JSON.stringify({error:process.env.PAPER_EXPORT_TOKEN?'Unlock V5 with your access password.':'The V5 owner must configure PAPER_EXPORT_TOKEN before access is enabled.',authRequired:true,strategyVersion:v5?5:null,exportEnabled:!!process.env.PAPER_EXPORT_TOKEN}));return;
+        }
+        if(path==='/api/paper/export/jobs') {
+          if(request.method!=='POST'){send(response,405,'application/json',JSON.stringify({error:'POST required'}));return;}
+          if(!isSameOrigin(request)){send(response,403,'application/json',JSON.stringify({error:'Same-origin request required'}));return;}
+          if(!paper || !v5){send(response,409,'application/json',JSON.stringify({error:'V5 account required'}));return;}
+          paperExport??=new PaperExport(paper.store,()=>paper!.exportResearchFiles());
+          try{const job=await paperExport.start();send(response,202,'application/json',JSON.stringify(job));}
+          catch{send(response,409,'application/json',JSON.stringify({error:'An export is already preparing, or temporary storage is unavailable. Try again later.'}));}return;
+        }
+        if(path==='/api/paper/export/status') {
+          if(request.method!=='GET'){send(response,405,'application/json',JSON.stringify({error:'GET required'}));return;}
+          const job=paperExport?.status(requestUrl.searchParams.get('id')??'');
+          send(response,job?200:404,'application/json',JSON.stringify(job??{error:'Export expired or unavailable. Click Export V5 Data to prepare a new snapshot.'}));return;
+        }
+        if(path==='/api/paper/export.zip') {
+          if(request.method!=='GET'){send(response,405,'application/json',JSON.stringify({error:'GET required'}));return;}
+          const download=await paperExport?.openDownload(requestUrl.searchParams.get('id')??'');
+          if(!download){send(response,404,'application/json',JSON.stringify({error:'Export is not ready or has expired'}));return;}
+          response.writeHead(200,{...SECURITY_HEADERS,'content-type':'application/zip','content-disposition':`attachment; filename="${download.filename}"`,'content-length':download.bytes!, 'cache-control':'private, no-store'});
+          try{await pipeline(download.handle.createReadStream({autoClose:false}),response);}finally{await download.close();}return;
+        }
+      }
       if (path === "/api/paper/settings" || path === "/api/paper/reset") {
         await paperReady;
         if (!paper) { send(response, 503, "application/json; charset=utf-8", JSON.stringify({ error: paperError ?? "Paper service not configured" })); return; }
@@ -233,12 +282,6 @@ export function createDeskServer(options: DeskServerOptions = {}): Server {
         return;
       }
       if (path === "/api/paper/export") {
-        const secret = process.env.PAPER_EXPORT_TOKEN;
-        const supplied = request.headers.authorization ?? "";
-        const expected = `Bearer ${secret ?? ""}`;
-        if (!secret || supplied.length !== expected.length || !timingSafeEqual(Buffer.from(supplied),Buffer.from(expected))) {
-          send(response,403,"application/json",JSON.stringify({error:"Export authorization required"})); return;
-        }
         if (request.method !== "GET") { send(response,405,"application/json",JSON.stringify({error:"GET required"})); return; }
         await paperReady;
         if (!paper) { send(response,503,"application/json",JSON.stringify({error:"Paper unavailable"})); return; }
@@ -336,7 +379,7 @@ export function createDeskServer(options: DeskServerOptions = {}): Server {
     }
   });
   const cleanup = async (): Promise<void> => {
-    await paperReady; await paper?.close();
+    await paperReady; await paperExport?.close(); await paper?.close();
     if (paperKey && activeServers.get(paperKey) === server) activeServers.delete(paperKey);
   };
   shutdowns.set(server, cleanup);

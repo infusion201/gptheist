@@ -119,7 +119,7 @@ async function main(args: string[]): Promise<void> {
       ["runtime dependencies allowlisted", async () => {
         const pkg = JSON.parse(await readFile(resolve(projectRoot, "package.json"), "utf8")) as { dependencies?: Record<string, string> };
         const dependencies = Object.keys(pkg.dependencies ?? {}).sort();
-        return dependencies.length === 2 && dependencies[0] === "fs-ext" && dependencies[1] === "viem";
+        return JSON.stringify(dependencies) === JSON.stringify(["@streamparser/json", "fs-ext", "viem", "yazl"]);
       }],
       ["execution boundary: paper-only", async () => EXECUTION_MODE === "paper-only"]
     ];

@@ -48,7 +48,7 @@ export class MemoryHealth {
   constructor() { this.delay.enable(); }
   sample() {
     const m = process.memoryUsage();
-    const pressure = m.rss >= 850*1048576 ? 'CRITICAL' : m.rss >= 700*1048576 ? 'WARNING' : 'NORMAL';
+    const pressure = m.rss >= 650*1048576 ? 'CRITICAL' : m.rss >= 500*1048576 ? 'WARNING' : 'NORMAL';
     const eventLoopDelayMs = Number.isFinite(this.delay.mean) ? this.delay.mean/1e6 : 0;
     this.delay.reset(); return { ...m, pressure, eventLoopDelayMs };
   }

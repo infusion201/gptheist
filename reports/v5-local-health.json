@@ -1,0 +1,100 @@
+{
+  "capturedAt": "2026-10-12T22:19:01.651Z",
+  "source": "Existing local monitor; not Railway, not the modified code restarted",
+  "snapshot": "2026-10-12T22:18:57.738Z",
+  "connection": "LIVE",
+  "error": null,
+  "quoteHealth": {
+    "pendingRequests": 0,
+    "lanes": {
+      "entry": {
+        "active": 0,
+        "pending": 0
+      },
+      "exit": {
+        "active": 0,
+        "pending": 0
+      }
+    },
+    "status": "DEGRADED",
+    "gas": {
+      "status": "LIVE",
+      "chain": {
+        "chainId": 4663,
+        "priceWei": "20032000",
+        "gwei": 0.020032,
+        "timestamp": "2026-10-12T22:18:56.787Z"
+      },
+      "ethereum": {
+        "chainId": 1,
+        "priceWei": "142187739",
+        "gwei": 0.142187739,
+        "timestamp": "2026-10-12T22:18:56.766Z"
+      },
+      "assumedGasUnits": 200000,
+      "estimatedSwapUsd": 0.009962514560000002,
+      "ethereumReferenceSwapUsd": 0.07071422823687,
+      "model": "ASSUMED_SWAP_UNITS",
+      "excludes": "Approval, failed transactions and any additional chain fees; actual usage is unknown"
+    },
+    "quoteSource": "Pons v2 sized curve model + Coinbase ETH/USD",
+    "lastAttempt": {
+      "timestamp": "2026-10-12T22:18:30.540Z",
+      "reason": null
+    },
+    "lastQuoteTimestamp": "2026-10-12T22:18:30.061Z",
+    "ethUsd": {
+      "status": "LIVE",
+      "bid": 2486.26,
+      "ask": 2486.65,
+      "ageMs": 2345,
+      "timestamp": "2026-10-12T22:18:59.209088073Z",
+      "source": "https://api.exchange.coinbase.com/products/ETH-USD/ticker"
+    }
+  },
+  "systemHealth": {
+    "researchRecording": {
+      "written": 90,
+      "skipped": 0,
+      "pending": 0,
+      "error": null,
+      "maxBytes": 134217728,
+      "retentionMs": 86400000
+    },
+    "rpc": {
+      "active": 1,
+      "pending": 0
+    },
+    "memory": {
+      "rss": 268918784,
+      "heapTotal": 169672704,
+      "heapUsed": 56457368,
+      "external": 8430668,
+      "arrayBuffers": 4316373,
+      "pressure": "NORMAL",
+      "eventLoopDelayMs": 21.018546446002805
+    },
+    "collections": {
+      "activeCandidates": 8,
+      "candidateObservations": 267,
+      "processedTokens": 10,
+      "quoteRecords": 4,
+      "activityEvents": 200,
+      "openPositions": 0,
+      "closedTrades": 0,
+      "equityRecords": 1
+    },
+    "persistence": {
+      "directory": "/workspaces/gptheist/runs/paper",
+      "lastSuccessfulWrite": "2026-10-12T22:18:58.154Z",
+      "error": null,
+      "pendingUpdates": 0,
+      "singleWriter": true
+    },
+    "pendingExitJobs": 0,
+    "timers": 3
+  },
+  "accountCreatedAt": "2026-10-08T21:53:20.354Z",
+  "positions": 0,
+  "residentTrades": 0
+}

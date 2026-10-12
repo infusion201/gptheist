@@ -7,6 +7,8 @@
 <div class="paper-title"><div><p class="eyebrow">GPTHEIST PROTOCOL / PAPER MODE</p><h1>Trading overview<span class="title-dot">.</span></h1><div class="terminal-subtitle">Your edge, measured. Every trade accounted for.</div></div><p class="session-badge"><span class="live-orbit" aria-hidden="true"></span>LIVE MARKET DATA<br><b>SIMULATED EXECUTION</b></p></div>
 
 <p id="paper-status" class="paper-notice" role="status">Loading persisted paper account…</p>
+<div class="export-controls"><button id="export-v5" type="button" hidden>📥 Export V5 Data</button><span id="export-status" role="status" aria-live="polite"></span></div>
+<dialog id="export-login" aria-labelledby="export-login-title"><form id="export-login-form"><h2 id="export-login-title">Unlock V5 data</h2><p>Enter your V5 access password once. Downloads and account data stay private.</p><label for="export-password">Access password</label><input id="export-password" type="password" autocomplete="current-password" required maxlength="4096"><p id="export-login-status" role="status" aria-live="polite"></p><div class="control-row"><button type="submit">Unlock</button><button id="export-login-cancel" type="button">Cancel</button></div></form></dialog>
 
 <section class="paper-stats" aria-label="Account overview"><article><span>BALANCE / EQUITY</span><strong id="equity">—</strong><small id="cash">AVAILABLE CASH —</small></article><article><span>LIFETIME P&amp;L / USD</span><strong id="pnl">—</strong><small id="return">—</small></article><article><span>MISSION CLOCK</span><strong id="clock">00:00:00</strong><small>CURRENT SERVER SESSION</small></article><article><span>ENTRY STATUS</span><strong id="gate">STANDBY</strong><small id="gate-stage">AWAITING GPTHEIST</small></article></section>
 

@@ -7,6 +7,8 @@ export interface LiquidityObservation {
   realQuoteReserveWei: string; quoteReserveWei: string; tokenReserveRaw: string;
   curveProgressBps: number; creatorTaxBps: number; snipeTaxBps: number;
   positionExitWei: string; netSellWei: string; executableUsd: number | null;
+  /** Net of known gas; absent on old saved observations, never inferred. */
+  netExecutableUsd?: number | null;
   exitCoverageRatio: number; positionParticipation: number | null;
   sellResult: string;
 }
@@ -28,6 +30,7 @@ export function sellObservation(q: PaperQuote, sizeUsd?: number): LiquidityObser
       realQuoteReserveWei: real.toString(), quoteReserveWei: e.quoteReserve, tokenReserveRaw: e.tokenReserve,
       curveProgressBps: e.progressBps, creatorTaxBps: e.creatorTaxBps, snipeTaxBps: e.currentSnipeTaxBps ?? e.snipeTaxBps,
       positionExitWei: gross.toString(), netSellWei: net.toString(), executableUsd: gross <= real ? q.notionalUsd : null,
+      netExecutableUsd: gross <= real && q.costs.gasUsd !== null ? q.notionalUsd-q.costs.gasUsd : null,
       exitCoverageRatio: Number(real) / Number(gross), positionParticipation: real === 0n ? null : Number(gross) / Number(real),
       sellResult: gross <= real ? "AVAILABLE" : "INSUFFICIENT_EXIT_LIQUIDITY" };
   } catch { return null; }

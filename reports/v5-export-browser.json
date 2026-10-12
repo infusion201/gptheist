@@ -1,0 +1,13 @@
+{
+  "syntheticBrowserCheck": true,
+  "browser": "Chromium headless",
+  "buttonLabel": "📥 Export V5 Data",
+  "oneTimeUnlockPassed": true,
+  "downloadPassed": true,
+  "filename": "gptheist-v5-export-2026-10-12.zip",
+  "bytes": 5390,
+  "zipSignaturePassed": true,
+  "httpOnlyCookie": true,
+  "reloadSessionPassed": true,
+  "pageErrors": []
+}

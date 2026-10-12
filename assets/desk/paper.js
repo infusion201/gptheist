@@ -20,6 +20,46 @@ function animateMoney(id,value,prefix=""){
  element.classList.remove("value-updated");void element.offsetWidth;element.classList.add("value-updated");
 }
 let startedAt=null,lastState=null,chartSignature="";
+let exportBusy=false,exportRequested=false,unlockDismissed=false;
+function requestV5Unlock(data){
+ if(data.strategyVersion===5)$("export-v5").hidden=false;
+ $("export-status").textContent=data.error??"Unlock V5 data to continue.";
+ if(data.exportEnabled && !unlockDismissed && !$("export-login").open)$("export-login").showModal();
+}
+function dismissV5Unlock(){exportRequested=false;unlockDismissed=true;$("export-password").value='';}
+$("export-login-cancel").addEventListener("click",()=>{$("export-login").close();dismissV5Unlock();});
+$("export-login").addEventListener("cancel",dismissV5Unlock);
+$("export-login-form").addEventListener("submit",async event=>{
+ event.preventDefault();const button=event.currentTarget.querySelector('button[type="submit"]');button.disabled=true;
+ try{
+  const response=await fetch('/api/paper/export/session',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:$("export-password").value})});
+  $("export-password").value='';const data=await response.json();if(!response.ok)throw Error(data.error??'Unlock failed');
+  $("export-login-status").textContent='';$("export-login").close();$("export-status").textContent='V5 data unlocked.';
+  if(exportRequested){exportRequested=false;void downloadV5Export();}
+ }catch(error){$("export-login-status").textContent=error.message;}
+ finally{$("export-password").value='';button.disabled=false;}
+});
+async function downloadV5Export(){
+ if(exportBusy)return;exportBusy=true;const button=$("export-v5");button.disabled=true;button.textContent='Preparing export…';
+ try {
+  let response=await fetch('/api/paper/export/jobs',{method:'POST'}),job=await response.json();
+  if(response.status===401){exportRequested=true;requestV5Unlock(job);return;}
+  if(!response.ok)throw Error(job.error??'Export could not start');
+  const id=job.id;
+  while(job.status==='BUILDING'){
+   $("export-status").textContent=`Preparing your ZIP · ${job.processedFiles} of ${job.totalFiles||'…'} history files · bot monitoring continues.`;
+   await new Promise(resolve=>setTimeout(resolve,2000));
+   response=await fetch('/api/paper/export/status?id='+encodeURIComponent(id),{cache:'no-store'});job=await response.json();
+   if(!response.ok)throw Error(job.error??'Export status unavailable');
+  }
+  if(job.status!=='READY')throw Error(job.error??'Export failed');
+  // Let the browser stream directly to a download; never buffer a large ZIP in a Blob.
+  const link=node('a');link.href='/api/paper/export.zip?id='+encodeURIComponent(id);link.download=job.filename;document.body.append(link);link.click();link.remove();
+  $("export-status").textContent=`Download started: ${job.filename}. Check your browser downloads.`;
+ }catch(error){$("export-status").textContent=`Export unavailable: ${error.message}`;}
+ finally{exportBusy=false;button.disabled=false;button.textContent='📥 Export V5 Data';}
+}
+$("export-v5").addEventListener("click",()=>{unlockDismissed=false;void downloadV5Export();});
 const revealObserver=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){entry.target.classList.add("revealed");revealObserver.unobserve(entry.target);}}},{threshold:0.04});
 for(const [i,element] of [...document.querySelectorAll(".paper-title,.paper-stats article,.scalp-summary,.gas-panel,.paper-panel")].entries()){
  element.classList.add("reveal");element.style.setProperty("--reveal-delay",`${Math.min(i,5)*55}ms`);revealObserver.observe(element);
@@ -80,7 +120,7 @@ for(const button of document.querySelectorAll("[data-chart-mode],[data-chart-ran
  if(lastState)chart(lastState.history);
 });
 
-function render(s){lastState=s;for(const p of s.positions){const q=p.management?.lastSuccessfulQuote;const expired=q&&([q.timestamp,q.blockTimestamp].some(t=>Date.now()-Date.parse(t)>s.config.QUOTE_MAX_AGE_MS)||(q.evidence&&Date.now()-Date.parse(q.evidence.usdTimestamp)>s.config.ETH_USD_MAX_AGE_MS));if(expired){p.markStatus="UNAVAILABLE";p.markReason??="QUOTE_STALE";}}startedAt=Date.parse(s.startedAt);const a=s.account,p=s.performance;$("connection").textContent=`● ${s.connection}`;animateMoney("equity",a.equity,s.positions.some(p=>p.markStatus!=="FRESH")?"LAST KNOWN · ":"");$("cash").textContent=`AVAILABLE CASH ${money(a.availableCash)}`;animateMoney("pnl",a.totalPnl,s.positions.some(p=>p.markStatus!=="FRESH")?"STALE · ":"");tone($("pnl"),a.totalPnl);$("return").textContent=pct(a.totalReturnPercent);$("gate").textContent=({PAPER_REJECT:"OBSERVING",PAPER_ELIGIBLE:"READY",PAPER_ENTER:"ENTERED",PAPER_EXIT:"EXITED",NOT_TRADABLE:"WAITING"})[s.latestGate?.outcome]??s.latestGate?.outcome?.replaceAll("_"," ")??"STANDBY";$("gate-stage").textContent=s.latestGate?.stage??"AWAITING GPTHEIST";$("gate").title=s.latestGate?.message??"";
+function render(s){$("export-v5").hidden=s.config?.PAPER_STRATEGY_VERSION!==5;lastState=s;for(const p of s.positions){const q=p.management?.lastSuccessfulQuote;const expired=q&&([q.timestamp,q.blockTimestamp].some(t=>Date.now()-Date.parse(t)>s.config.QUOTE_MAX_AGE_MS)||(q.evidence&&Date.now()-Date.parse(q.evidence.usdTimestamp)>s.config.ETH_USD_MAX_AGE_MS));if(expired){p.markStatus="UNAVAILABLE";p.markReason??="QUOTE_STALE";}}startedAt=Date.parse(s.startedAt);const a=s.account,p=s.performance;$("connection").textContent=`● ${s.connection}`;animateMoney("equity",a.equity,s.positions.some(p=>p.markStatus!=="FRESH")?"LAST KNOWN · ":"");$("cash").textContent=`AVAILABLE CASH ${money(a.availableCash)}`;animateMoney("pnl",a.totalPnl,s.positions.some(p=>p.markStatus!=="FRESH")?"STALE · ":"");tone($("pnl"),a.totalPnl);$("return").textContent=pct(a.totalReturnPercent);$("gate").textContent=({PAPER_REJECT:"OBSERVING",PAPER_ELIGIBLE:"READY",PAPER_ENTER:"ENTERED",PAPER_EXIT:"EXITED",NOT_TRADABLE:"WAITING"})[s.latestGate?.outcome]??s.latestGate?.outcome?.replaceAll("_"," ")??"STANDBY";$("gate-stage").textContent=s.latestGate?.stage??"AWAITING GPTHEIST";$("gate").title=s.latestGate?.message??"";
 if(document.activeElement!==$("starting-equity"))$("starting-equity").value=String(a.startingBalance);if(document.activeElement!==$("max-open-trades"))$("max-open-trades").value=String(s.config.MAX_OPEN_POSITIONS);
 const lifetimeRate=p.totalTrades?p.wins/p.totalTrades*100:0;
 $("analytics-winrate").textContent=p.totalTrades?pct(p.winRate):"—";
@@ -106,6 +146,7 @@ $("ethereum-gas-usd").textContent=`${gasMoney(liveEthereum?gas.ethereumReference
 $("gas-model").textContent=`${(gas?.assumedGasUnits??200000).toLocaleString()} assumed gas units per swap · new curve fills deduct the chain estimate. Historical unknown gas stays unknown. Approvals and additional chain fees excluded.`;
 $("paper-status").textContent=`PAPER QUOTES ${health?.status??"DEGRADED"} · ETH/USD ${usd?.status==="LIVE"?money(usd.ask):usd?.status??"UNAVAILABLE"} · ${health?.quoteSource??"AWAITING QUOTE"} · ${s.positions.length} OPEN · ${s.performance.totalTrades} CLOSED${s.error?` · RESEARCH UNAVAILABLE: ${s.error}`:""}${health?.lastAttempt?.reason?` · ${health.lastAttempt.reason}`:""}${s.positions.some(p=>p.markStatus!=="FRESH")?" · VALUATION INCLUDES LAST-KNOWN MARKS":""}`;
 if(s.entryDiagnostics){const d=s.entryDiagnostics;$("paper-status").textContent+=` · ${d.strategyMode??"STRICT"} V${d.strategyVersion??3} · ${d.liveCandidates} LIVE CANDIDATES · SCAN ${d.lastCycleMs===null?"WARMING UP":duration(d.lastCycleMs)}${d.blockers.length?` · ENTRY BLOCKERS: ${d.blockers.slice(0,3).map(b=>`${b.reason} (${b.count})`).join(", ")}`:""}`;}
+if(s.config?.PAPER_STRATEGY_VERSION===5 && health?.degradationReasons?.length)$("paper-status").textContent+=` · QUOTE HEALTH: ${health.degradationReasons.join(", ")} · LAST QUOTE ${health.quoteAgeMs===null?"NEVER":duration(health.quoteAgeMs)} AGO`;
 if(s.systemHealth){const h=s.systemHealth;$("paper-status").textContent+=` · RSS ${(h.memory.rss/1048576).toFixed(0)} MiB · HEAP ${(h.memory.heapUsed/1048576).toFixed(0)} MiB · ${h.memory.pressure} · ${h.collections.activeCandidates} CANDIDATES · ${s.quoteHealth?.pendingRequests??0} PENDING QUOTES · DURABLE ${h.persistence.lastSuccessfulWrite??"UNAVAILABLE"}${h.persistence.error?" · STORAGE ERROR":""}`;}
 if(s.entryDiagnostics?.accountSizingBlocked)$("paper-status").textContent+=` · ACCOUNT SIZING BLOCKED: ${money(s.entryDiagnostics.allocationCapUsd)} allocation cap is below ${money(s.entryDiagnostics.minimumTradeUsd)} minimum trade`;
 $("recent-rejections").replaceChildren(...(s.recentRejections??[]).slice(-25).reverse().map(d=>node("p",`${d.candidate.symbol} · ${d.reason}`)));
@@ -145,7 +186,7 @@ function renderPlans(positions,trades){
   }
   if(!container.childNodes.length)container.append(node("p","No paper trade plans yet.","empty"));
 }
-async function sync(){try{const response=await fetch("/api/paper",{cache:"no-store"});const data=await response.json();if(!response.ok)throw new Error(data.error??`HTTP ${response.status}`);render(data);}catch(error){if(lastState){for(const p of lastState.positions){p.markStatus="UNAVAILABLE";p.markReason??="MONITOR_CONNECTION_UNAVAILABLE";}render(lastState);}$("connection").textContent="● UNAVAILABLE";$("paper-status").textContent=`PAPER DATA UNAVAILABLE · ${error.message} · Display may be stale.`;}finally{setTimeout(sync,5000);}}
+async function sync(){try{const response=await fetch("/api/paper",{cache:"no-store"});const data=await response.json();if(response.status===401 && data.authRequired){requestV5Unlock(data);$("connection").textContent="● LOCKED";$("paper-status").textContent=data.error;return;}if(!response.ok)throw new Error(data.error??`HTTP ${response.status}`);render(data);}catch(error){if(lastState){for(const p of lastState.positions){p.markStatus="UNAVAILABLE";p.markReason??="MONITOR_CONNECTION_UNAVAILABLE";}render(lastState);}$("connection").textContent="● UNAVAILABLE";$("paper-status").textContent=`PAPER DATA UNAVAILABLE · ${error.message} · Display may be stale.`;}finally{setTimeout(sync,5000);}}
 async function updatePaper(path,payload){const status=$("account-control-status");status.textContent="Saving…";try{const response=await fetch(path,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});const data=await response.json();if(!response.ok)throw new Error(data.error??`HTTP ${response.status}`);render(data);status.textContent=path.endsWith("/reset")?"Paper account reset. Visible paper history cleared; recovery backup retained.":"Maximum open trades updated.";}catch(error){status.textContent=`Not saved: ${error.message}`;}}
 $("trade-limit-form").addEventListener("submit",event=>{event.preventDefault();const maxOpenTrades=Number($("max-open-trades").value);if(!Number.isInteger(maxOpenTrades)||maxOpenTrades<1||maxOpenTrades>100){$("account-control-status").textContent="Maximum open trades must be an integer from 1 to 100.";return;}void updatePaper("/api/paper/settings",{maxOpenTrades});});
 $("equity-reset-form").addEventListener("submit",event=>{event.preventDefault();const startingBalanceUsd=Number($("starting-equity").value);if(!Number.isFinite(startingBalanceUsd)||startingBalanceUsd<1||startingBalanceUsd>1_000_000_000){$("account-control-status").textContent="Starting equity must be between $1 and $1,000,000,000.";return;}if(!window.confirm("Reset the paper account to the selected equity? This removes all open positions and visible paper history. A recovery backup will be retained."))return;void updatePaper("/api/paper/reset",{startingBalanceUsd});});

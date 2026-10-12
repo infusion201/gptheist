@@ -1,0 +1,1878 @@
+{
+  "source": "/workspaces/gptheist/runs/paper",
+  "accountCreatedAt": "2026-10-08T21:53:20.354Z",
+  "snapshotAt": "2026-10-12T22:22:20.307Z",
+  "archivesScanned": 26450,
+  "provenance": "Local retained files; not a verified Railway production export. Orphan archives included and IDs deduplicated; no account history rewritten.",
+  "supplementalSources": [
+    "/workspaces/gptheist/runs/paper-sell-live-state.json",
+    "/workspaces/gptheist/runs/scalp-v4/baseline.json",
+    "/workspaces/gptheist/runs/scalp-v4/current-tape.json",
+    "/workspaces/gptheist/runs/sell-root-cause-2026-09-28/paper-sell-live-state.json",
+    "/workspaces/gptheist/runs/strategy-v2/tape.json"
+  ],
+  "cohorts": {
+    "0": {
+      "trades": 28,
+      "wins": 4,
+      "losses": 24,
+      "winRatePercent": 14.285714285714286,
+      "profitFactor": 0.14137934776287292,
+      "averageWinUsd": 2.549463260022675,
+      "averageLossUsd": 3.0054640232871175,
+      "worstLossUsd": -9.726574214776264,
+      "worstReturnPercent": -89.81139625832192,
+      "netPnlUsd": -61.93328351880012,
+      "maxAccountDrawdown": null
+    },
+    "3": {
+      "trades": 9,
+      "wins": 3,
+      "losses": 6,
+      "winRatePercent": 33.333333333333336,
+      "profitFactor": 0.2466276733439923,
+      "averageWinUsd": 0.6724004230729399,
+      "averageLossUsd": 1.3631893249365545,
+      "worstLossUsd": -3.8153853744620227,
+      "worstReturnPercent": -76.61416414582375,
+      "netPnlUsd": -6.161934680400508,
+      "maxAccountDrawdown": null
+    }
+  },
+  "v5": {
+    "trades": 0,
+    "wins": 0,
+    "losses": 0,
+    "winRatePercent": null,
+    "profitFactor": null,
+    "averageWinUsd": null,
+    "averageLossUsd": null,
+    "worstLossUsd": null,
+    "worstReturnPercent": null,
+    "netPnlUsd": 0,
+    "maxAccountDrawdown": null
+  },
+  "openPositions": 0,
+  "losingTrades": [
+    {
+      "id": "7d6ea28f-876a-4e6a-a21e-ca95842531fc",
+      "symbol": "Summer",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T16:36:44.151Z",
+      "returnPercent": -19.10567607087569,
+      "pnlUsd": -2.103534935403413,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 2646,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.1449067835065093,
+        "realLiquidityUsd": 2990.480204962438,
+        "quoteReserve": "2791351507873883198",
+        "realQuoteReserve": "1111351507873883198"
+      },
+      "verifiedPreEntryObservations": 0,
+      "preEntryReserveFalling": null,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 39.81410097363114,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 33.837248497463975,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 97.0,
+      "entryRealReserve": "1111351507873883198",
+      "exitRealReserve": "859193068377159934",
+      "entryToExitReserveChangePercent": -22.689350552925003,
+      "exitReason": "DYNAMIC_RISK_EXIT",
+      "exitReasoning": [
+        "Return -19.106% crossed plan downside -17.185%"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "f349ece3-a486-4027-9ae1-33dc145da14e",
+      "symbol": "HAWALA",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:28:17.039Z",
+      "returnPercent": -20.698648336224075,
+      "pnlUsd": -2.225104696144088,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 1222,
+        "creatorTaxBps": 150,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.17700045298761283,
+        "realLiquidityUsd": 1383.6481646373463,
+        "quoteReserve": "2193428289016871119",
+        "realQuoteReserve": "513428289016871119"
+      },
+      "verifiedPreEntryObservations": 6,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 23.407571224815275,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 16.281357672535872,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 4119.0,
+      "entryRealReserve": "513428289016871119",
+      "exitRealReserve": "326721505860913132",
+      "entryToExitReserveChangePercent": -36.364724568151495,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3244310752027494; realQuoteReserveWei=326721505860913132; coverageRatio=100.70598374607992; configuredMinimum=100; participation=0.009929896544394025; maxParticipationBps=100",
+        "previousReserveWei=474372499409561852; currentReserveWei=326721505860913132; changePercent=-31.12553820730033; peakReserveWei=513428289016871119; peakDropPercent=36.364724568151495; maxDropPercent=10",
+        "observations=9; required=3; spanMs=47000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=474372499409561852; currentReserveWei=326721505860913132; declinePercent=31.12553820730033"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "88ea7b6e-a5c1-46bf-8f2e-b9dd1880e33c",
+      "symbol": "CLAIM",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:28:17.041Z",
+      "returnPercent": -3.4675153055626384,
+      "pnlUsd": -0.3588878341257331,
+      "overTenPercent": false,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 80,
+        "curveProgressBps": 914,
+        "creatorTaxBps": 250,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.17921887721440002,
+        "realLiquidityUsd": 1035.2455935677174,
+        "quoteReserve": "2064127104245440643",
+        "realQuoteReserve": "384127104245440643"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": true,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 18.609663302970947,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 20.243234726439862,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 282.0,
+      "entryRealReserve": "384127104245440643",
+      "exitRealReserve": "426404383675437801",
+      "entryToExitReserveChangePercent": 11.006065170288991,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3845362274542338; realQuoteReserveWei=426404383675437801; coverageRatio=110.8879614538235; configuredMinimum=100; participation=0.009018111496408245; maxParticipationBps=100",
+        "previousReserveWei=613606021255277978; currentReserveWei=426404383675437801; changePercent=-30.50844207768275; peakReserveWei=630029236937976646; peakDropPercent=32.31990538283301; maxDropPercent=10",
+        "observations=18; required=3; spanMs=86000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=613606021255277978; currentReserveWei=426404383675437801; declinePercent=30.50844207768275"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "616d6f7b-6af9-47f3-a0ab-f5b57b49834e",
+      "symbol": "NEARME",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:31:10.462Z",
+      "returnPercent": -54.835569802955305,
+      "pnlUsd": -5.971593551541833,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 1890,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.1614928421398674,
+        "realLiquidityUsd": 2139.215298486597,
+        "quoteReserve": "2474069502294588088",
+        "realQuoteReserve": "794069502294588088"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 32.09568290454752,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 0.2112249162895841,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 1995.0,
+      "entryRealReserve": "794069502294588088",
+      "exitRealReserve": "3556089941667482",
+      "entryToExitReserveChangePercent": -99.55216893088179,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=1848074889491273; realQuoteReserveWei=3556089941667482; coverageRatio=1.9242131159773408; configuredMinimum=100; participation=0.5196929548482383; maxParticipationBps=100",
+        "previousReserveWei=826617464845902488; currentReserveWei=3556089941667482; changePercent=-99.56980222498318; peakReserveWei=833578713321820405; peakDropPercent=99.57339482344788; maxDropPercent=10",
+        "observations=19; required=3; spanMs=86000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=826617464845902488; currentReserveWei=3556089941667482; declinePercent=99.56980222498318"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "60947e60-9d45-42ec-bffe-41aa5abb4727",
+      "symbol": "Apex",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:32:31.974Z",
+      "returnPercent": -12.211871180173006,
+      "pnlUsd": -1.2846888481542003,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 85,
+        "curveProgressBps": 1027,
+        "creatorTaxBps": 100,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.18122700459346638,
+        "realLiquidityUsd": 1160.2081144155927,
+        "quoteReserve": "2111393938669608812",
+        "realQuoteReserve": "431393938669608812"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": true,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 20.431712470550643,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 16.934411817652503,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 425.0,
+      "entryRealReserve": "431393938669608812",
+      "exitRealReserve": "342498168931309106",
+      "entryToExitReserveChangePercent": -20.60663393010309,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3504908205939796; realQuoteReserveWei=342498168931309106; coverageRatio=97.71958316936082; configuredMinimum=100; participation=0.010233363339944556; maxParticipationBps=100",
+        "previousReserveWei=395595971455333830; currentReserveWei=342498168931309106; changePercent=-13.422230344936645; peakReserveWei=431393938669608812; peakDropPercent=20.606633930103087; maxDropPercent=10",
+        "observations=5; required=3; spanMs=17000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=395595971455333830; currentReserveWei=342498168931309106; declinePercent=13.422230344936645"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "50410792-6765-4f1c-9afa-4a564b7ecaa9",
+      "symbol": "VORTEX",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:37:23.875Z",
+      "returnPercent": -16.50792646737475,
+      "pnlUsd": -1.7944116070036351,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 2666,
+        "creatorTaxBps": 230,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.1393113540651894,
+        "realLiquidityUsd": 3013.988569541821,
+        "quoteReserve": "2800075428685716585",
+        "realQuoteReserve": "1120075428685716585"
+      },
+      "verifiedPreEntryObservations": 8,
+      "preEntryReserveFalling": true,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 40.00161628543882,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 36.5995347708016,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 1032.0,
+      "entryRealReserve": "1120075428685716585",
+      "exitRealReserve": "969822826893538497",
+      "entryToExitReserveChangePercent": -13.414507446921032,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3488817708336720; realQuoteReserveWei=969822826893538497; coverageRatio=277.9803669810819; configuredMinimum=100; participation=0.003597376357403167; maxParticipationBps=100",
+        "previousReserveWei=1067911454805649331; currentReserveWei=969822826893538497; changePercent=-9.185089968902162; peakReserveWei=1120075428685716585; peakDropPercent=13.414507446921029; maxDropPercent=10",
+        "observations=7; required=3; spanMs=27000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=1067911454805649331; currentReserveWei=969822826893538497; declinePercent=9.185089968902162"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "92f477e1-465c-45ba-b766-812570d1199e",
+      "symbol": "PENNYMARKETS",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:39:27.759Z",
+      "returnPercent": -15.585069096319684,
+      "pnlUsd": -1.67851194167363,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 1744,
+        "creatorTaxBps": 180,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.16111999932026494,
+        "realLiquidityUsd": 1970.2127298140417,
+        "quoteReserve": "2412840633602152068",
+        "realQuoteReserve": "732840633602152068"
+      },
+      "verifiedPreEntryObservations": 7,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 30.37252537098099,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 26.46270627240071,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 2711.0,
+      "entryRealReserve": "732840633602152068",
+      "exitRealReserve": "604555107811207148",
+      "entryToExitReserveChangePercent": -17.50524191874835,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3478383057409929; realQuoteReserveWei=604069107811207148; coverageRatio=173.663767860291; configuredMinimum=100; participation=0.005758253505155317; maxParticipationBps=100",
+        "previousReserveWei=732840633602152068; currentReserveWei=604069107811207148; changePercent=-17.571559202167958; peakReserveWei=732840633602152068; peakDropPercent=17.571559202167958; maxDropPercent=10",
+        "observations=2; required=3; spanMs=7000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=732840633602152068; currentReserveWei=604069107811207148; declinePercent=17.571559202167958"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "5d976201-8ede-4c7c-902c-5c3dfa1c6645",
+      "symbol": "Coresecure",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:40:18.382Z",
+      "returnPercent": -26.296528338529818,
+      "pnlUsd": -2.8820995059028682,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 4490,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.11309869413024008,
+        "realLiquidityUsd": 5068.129523086808,
+        "quoteReserve": "3565913879452997634",
+        "realQuoteReserve": "1885913879452997634"
+      },
+      "verifiedPreEntryObservations": 6,
+      "preEntryReserveFalling": true,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 53.42456612371402,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 45.72124976668784,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 2061.0,
+      "entryRealReserve": "1885913879452997634",
+      "exitRealReserve": "1415133901902081926",
+      "entryToExitReserveChangePercent": -24.96296266123582,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3035424948042275; realQuoteReserveWei=1415133901902081926; coverageRatio=466.20619060760686; configuredMinimum=100; participation=0.0021449736621830338; maxParticipationBps=100",
+        "previousReserveWei=1821088678763905789; currentReserveWei=1415133901902081926; changePercent=-22.29187307547112; peakReserveWei=1927419994822605548; peakDropPercent=26.57885122581563; maxDropPercent=10",
+        "observations=10; required=3; spanMs=47000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=1821088678763905789; currentReserveWei=1415133901902081926; declinePercent=22.29187307547112"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "8a8d71ff-db5c-4199-8c5e-5b7f816ad047",
+      "symbol": "DELAY",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:42:01.483Z",
+      "returnPercent": -6.569814362768043,
+      "pnlUsd": -0.6970573038896895,
+      "overTenPercent": false,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 1035,
+        "creatorTaxBps": 200,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.18068526160409457,
+        "realLiquidityUsd": 1169.190167527806,
+        "quoteReserve": "2114908333529663381",
+        "realQuoteReserve": "434908333529663381"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 20.563933038356595,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 20.523760299554077,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 2675.0,
+      "entryRealReserve": "434908333529663381",
+      "exitRealReserve": "433839313903239353",
+      "entryToExitReserveChangePercent": -0.24580343580634656,
+      "exitReason": "MAX_HOLD_EXIT",
+      "exitReasoning": [
+        "Position age reached plan limit 2708617 ms"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "7f99fe54-be12-4e11-878e-7fbdb50d7923",
+      "symbol": "HEELER",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:42:57.512Z",
+      "returnPercent": -4.524741628693905,
+      "pnlUsd": -0.46966818105842734,
+      "overTenPercent": false,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 85,
+        "curveProgressBps": 937,
+        "creatorTaxBps": 100,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.18219973697056388,
+        "realLiquidityUsd": 1057.7967593884807,
+        "quoteReserve": "2073587078110597877",
+        "realQuoteReserve": "393587078110597877"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 18.9809766016301,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 18.9809766016301,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 4715.0,
+      "entryRealReserve": "393587078110597877",
+      "exitRealReserve": "393587078110597878",
+      "entryToExitReserveChangePercent": 0.0,
+      "exitReason": "MAX_HOLD_EXIT",
+      "exitReasoning": [
+        "Position age reached plan limit 2448565 ms"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "a232c89f-1b6c-4122-8b3f-ff14827616b2",
+      "symbol": "FLY",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:43:29.686Z",
+      "returnPercent": -22.3785472830509,
+      "pnlUsd": -2.4101695423845815,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 4595,
+        "creatorTaxBps": 300,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.10645172967857636,
+        "realLiquidityUsd": 5187.416763680008,
+        "quoteReserve": "3610280593319171580",
+        "realQuoteReserve": "1930280593319171580"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 53.13181968283956,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 49.344175247156606,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 6981.0,
+      "entryRealReserve": "1930280593319171580",
+      "exitRealReserve": "1636499155224392691",
+      "entryToExitReserveChangePercent": -15.219623463634036,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3236183939373695; realQuoteReserveWei=1634536714307171009; coverageRatio=505.08152346356; configuredMinimum=100; participation=0.0019798784028815237; maxParticipationBps=100",
+        "previousReserveWei=1908706007935607741; currentReserveWei=1634536714307171009; changePercent=-14.364144739344589; peakReserveWei=2011790862814130828; peakDropPercent=18.752155379573082; maxDropPercent=10",
+        "observations=5; required=3; spanMs=30000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=1908706007935607741; currentReserveWei=1634536714307171009; declinePercent=14.364144739344589"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "3800f3a0-b9ca-48c6-9d6c-d601f9c45bc7",
+      "symbol": "BRAIN",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:44:26.640Z",
+      "returnPercent": -54.80327377915771,
+      "pnlUsd": -5.869430621747791,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 1901,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.1588643913781394,
+        "realLiquidityUsd": 2147.3199725874038,
+        "quoteReserve": "2478779865186423767",
+        "realQuoteReserve": "798779865186423767"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 32.22471976656746,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 0.16301744149503958,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 4139.0,
+      "entryRealReserve": "798779865186423767",
+      "exitRealReserve": "2743164854278100",
+      "entryToExitReserveChangePercent": -99.65658062078995,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=1812826138122305; realQuoteReserveWei=2743164854278100; coverageRatio=1.5131979821955923; configuredMinimum=100; participation=0.6608520575404405; maxParticipationBps=100",
+        "previousReserveWei=956525293455410159; currentReserveWei=2743164854278100; changePercent=-99.7132156490741; peakReserveWei=973657721746302762; peakDropPercent=99.71826189090783; maxDropPercent=10",
+        "observations=18; required=3; spanMs=90000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=956525293455410159; currentReserveWei=2743164854278100; declinePercent=99.7132156490741"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "6184e30b-0e02-464a-87f0-df47be7863bf",
+      "symbol": "BUSTO",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-28T18:44:26.641Z",
+      "returnPercent": -89.81139625832192,
+      "pnlUsd": -9.726574214776264,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 7918,
+        "creatorTaxBps": 200,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.07797998837675496,
+        "realLiquidityUsd": 8943.407269824718,
+        "quoteReserve": "5005848909962856286",
+        "realQuoteReserve": "3325848909962856286"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 66.43925875077069,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "UNISWAP_V4",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": null,
+        "realReserveSharePercent": null,
+        "postMigration": true
+      },
+      "preEntrySellAgeMs": 99.0,
+      "entryRealReserve": "3325848909962856286",
+      "exitRealReserve": null,
+      "entryToExitReserveChangePercent": null,
+      "exitReason": "DYNAMIC_RISK_EXIT",
+      "exitReasoning": [
+        "Return -89.811% crossed plan downside -17.055%"
+      ],
+      "quoteFailures": 1026,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "ecab955c-aea8-4433-8b22-90157616004f",
+      "symbol": "SS",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-29T21:08:37.658Z",
+      "returnPercent": -21.486490318638275,
+      "pnlUsd": -2.29045986796684,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 6653,
+        "creatorTaxBps": 200,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.08594502994325198,
+        "realLiquidityUsd": 7507.551941478728,
+        "quoteReserve": "4474568335323072441",
+        "realQuoteReserve": "2794568335323072441"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": true,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 62.45447886586582,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 58.93206750650513,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 334.0,
+      "entryRealReserve": "2794568335323072441",
+      "exitRealReserve": "2410782997819796200",
+      "entryToExitReserveChangePercent": -13.733260076422782,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3273042750555733; realQuoteReserveWei=2449649574803127975; coverageRatio=748.4318909024942; configuredMinimum=100; participation=0.0013361269237126617; maxParticipationBps=100",
+        "previousReserveWei=2550433116076657943; currentReserveWei=2449649574803127975; changePercent=-3.9516245549918874; peakReserveWei=2794568335323072441; peakDropPercent=12.342470075260097; maxDropPercent=10",
+        "observations=9; required=3; spanMs=62000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=2550433116076657943; currentReserveWei=2449649574803127975; declinePercent=3.9516245549918874"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "256ad7e0-0d77-4bd5-bbee-e436465c38d4",
+      "symbol": "OPENDOTS",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-29T21:09:22.327Z",
+      "returnPercent": -18.200837066532287,
+      "pnlUsd": -1.9201883105191566,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 1790,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.15953615723918588,
+        "realLiquidityUsd": 2020.8600622843317,
+        "quoteReserve": "2431866798479171227",
+        "realQuoteReserve": "751866798479171227"
+      },
+      "verifiedPreEntryObservations": 7,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 30.917268945378503,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 24.4990758787615,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 2254.0,
+      "entryRealReserve": "751866798479171227",
+      "exitRealReserve": "545138327184281376",
+      "entryToExitReserveChangePercent": -27.49535844820481,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3243395248762322; realQuoteReserveWei=545138327184281376; coverageRatio=168.07644007997663; configuredMinimum=100; participation=0.005949673847947786; maxParticipationBps=100",
+        "previousReserveWei=684252822253661327; currentReserveWei=545138327184281376; changePercent=-20.330861714415907; peakReserveWei=751866798479171227; peakDropPercent=27.495358448204815; maxDropPercent=10",
+        "observations=18; required=3; spanMs=84000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=684252822253661327; currentReserveWei=545138327184281376; declinePercent=20.330861714415907"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "af4bb5d5-f790-40d3-b15a-6dc848f67c15",
+      "symbol": "LAOTZU",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-29T21:11:02.046Z",
+      "returnPercent": -12.712726806592725,
+      "pnlUsd": -1.3030544976757543,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 85,
+        "curveProgressBps": 1342,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.1679748156058789,
+        "realLiquidityUsd": 1515.7518728852888,
+        "quoteReserve": "2243977613152685362",
+        "realQuoteReserve": "563977613152685362"
+      },
+      "verifiedPreEntryObservations": 11,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 25.132942942346148,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 20.79830914067108,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 84.0,
+      "entryRealReserve": "563977613152685362",
+      "exitRealReserve": "441166835925091970",
+      "entryToExitReserveChangePercent": -21.775824848981173,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3362685696240193; realQuoteReserveWei=441166835925091970; coverageRatio=131.19478767175863; configuredMinimum=100; participation=0.007622254037271199; maxParticipationBps=100",
+        "previousReserveWei=563977613152685362; currentReserveWei=441166835925091970; changePercent=-21.775824848981177; peakReserveWei=563977613152685362; peakDropPercent=21.775824848981177; maxDropPercent=10",
+        "observations=2; required=3; spanMs=5000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=563977613152685362; currentReserveWei=441166835925091970; declinePercent=21.775824848981177"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "9360532d-27fe-445b-8b74-00b62d96393c",
+      "symbol": "2o1",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-29T21:14:46.842Z",
+      "returnPercent": -33.27927803147197,
+      "pnlUsd": -3.494324193304556,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 2601,
+        "creatorTaxBps": 400,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.13364694669844235,
+        "realLiquidityUsd": 2937.3084420536993,
+        "quoteReserve": "2772610474141551676",
+        "realQuoteReserve": "1092610474141551676"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 39.407283653137135,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 29.636760601480955,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 85.0,
+      "entryRealReserve": "1092610474141551676",
+      "exitRealReserve": "707610369222653236",
+      "entryToExitReserveChangePercent": -35.236721048403595,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=2744716902884962; realQuoteReserveWei=707610369222653236; coverageRatio=257.8081435206984; configuredMinimum=100; participation=0.0038788534231065275; maxParticipationBps=100",
+        "previousReserveWei=1186660474141551677; currentReserveWei=707610369222653236; changePercent=-40.36960152948977; peakReserveWei=1186660474141551677; peakDropPercent=40.36960152948977; maxDropPercent=10",
+        "observations=17; required=3; spanMs=87000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=1186660474141551677; currentReserveWei=707610369222653236; declinePercent=40.36960152948977"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "a32fad34-ff51-4726-87be-2c958a0b5e15",
+      "symbol": "ROUTER",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-29T21:17:13.600Z",
+      "returnPercent": -55.26319713298439,
+      "pnlUsd": -5.813688338389957,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 1921,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.15558928914426134,
+        "realLiquidityUsd": 2169.0005670915248,
+        "quoteReserve": "2487184110531544823",
+        "realQuoteReserve": "807184110531544823"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": true,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 32.45373380738745,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 0.22364766551465431,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 6427.0,
+      "entryRealReserve": "807184110531544823",
+      "exitRealReserve": "3765702686795433",
+      "entryToExitReserveChangePercent": -99.53347660866173,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=1771649789341617; realQuoteReserveWei=3765702686795433; coverageRatio=2.1255344647967074; configuredMinimum=100; participation=0.47046990606931566; maxParticipationBps=100",
+        "previousReserveWei=866277891101940919; currentReserveWei=3765702686795433; changePercent=-99.5653008433581; peakReserveWei=870151378842893095; peakDropPercent=99.56723591108907; maxDropPercent=10",
+        "observations=18; required=3; spanMs=86000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=866277891101940919; currentReserveWei=3765702686795433; declinePercent=99.5653008433581"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "ed21e96a-aa2e-4270-ab13-b7e7cf89d921",
+      "symbol": "EMBER",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-29T21:18:21.162Z",
+      "returnPercent": -53.40831207558073,
+      "pnlUsd": -5.591850274313304,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 2195,
+        "creatorTaxBps": 200,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.1450454561463708,
+        "realLiquidityUsd": 2478.011643401098,
+        "quoteReserve": "2602315098056409806",
+        "realQuoteReserve": "922315098056409806"
+      },
+      "verifiedPreEntryObservations": 6,
+      "preEntryReserveFalling": true,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 35.44209918104303,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 8.389553225551815,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 88.0,
+      "entryRealReserve": "922315098056409806",
+      "exitRealReserve": "153851988667063774",
+      "entryToExitReserveChangePercent": -83.31893416997343,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=2093970985131419; realQuoteReserveWei=259312504058028313; coverageRatio=123.83767774210763; configuredMinimum=100; participation=0.008075086825210848; maxParticipationBps=100",
+        "previousReserveWei=875762561286675660; currentReserveWei=259312504058028313; changePercent=-70.39009024580305; peakReserveWei=931918098056409806; peakDropPercent=72.17432469668252; maxDropPercent=10",
+        "observations=12; required=3; spanMs=54000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=875762561286675660; currentReserveWei=259312504058028313; declinePercent=70.39009024580305"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "adb9df25-1481-4ea7-9b56-73545509ef02",
+      "symbol": "PFE",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-29T21:20:03.881Z",
+      "returnPercent": -61.042979856384136,
+      "pnlUsd": -6.415617182905972,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 2431,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.14324315076275035,
+        "realLiquidityUsd": 2742.295502853273,
+        "quoteReserve": "2701270642136941843",
+        "realQuoteReserve": "1021270642136941843"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 37.80704629170468,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 1.4996883271519896,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 259.0,
+      "entryRealReserve": "1021270642136941843",
+      "exitRealReserve": "25578359568884956",
+      "entryToExitReserveChangePercent": -97.49543769168142,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=1543802510985059; realQuoteReserveWei=27023348162236430; coverageRatio=17.504407441981396; configuredMinimum=100; participation=0.05712846911924977; maxParticipationBps=100",
+        "previousReserveWei=1021270642136941843; currentReserveWei=27023348162236430; changePercent=-97.35394840042676; peakReserveWei=1021270642136941843; peakDropPercent=97.35394840042676; maxDropPercent=10",
+        "observations=4; required=3; spanMs=15000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=1021270642136941843; currentReserveWei=27023348162236430; declinePercent=97.35394840042676"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "75671c72-51c7-4c08-992d-14f790db84eb",
+      "symbol": "KMA",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-29T21:22:39.550Z",
+      "returnPercent": -16.844969789116313,
+      "pnlUsd": -1.7535613550470082,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 4491,
+        "creatorTaxBps": 200,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.1054389004060485,
+        "realLiquidityUsd": 5060.464273254122,
+        "quoteReserve": "3566613828898379249",
+        "realQuoteReserve": "1886613828898379249"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 52.9268692422009,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 49.944988121233905,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 9218.0,
+      "entryRealReserve": "1886613828898379249",
+      "exitRealReserve": "1676307264633124460",
+      "entryToExitReserveChangePercent": -11.14730322887837,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3326928917335513; realQuoteReserveWei=1676330528637589679; coverageRatio=503.8672512366563; configuredMinimum=100; participation=0.0019846497218179403; maxParticipationBps=100",
+        "previousReserveWei=1940612873903468098; currentReserveWei=1676330528637589679; changePercent=-13.618499022645597; peakReserveWei=1940612873903468098; peakDropPercent=13.618499022645597; maxDropPercent=10",
+        "observations=3; required=3; spanMs=18000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=1940612873903468098; currentReserveWei=1676330528637589679; declinePercent=13.618499022645597"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "b903584f-7807-4634-8463-8b74ad64391b",
+      "symbol": "THISISFINE",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-29T21:23:15.032Z",
+      "returnPercent": -6.8520701938721045,
+      "pnlUsd": -0.693429503619857,
+      "overTenPercent": false,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 90,
+        "curveProgressBps": 1648,
+        "creatorTaxBps": 250,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.15323219741027314,
+        "realLiquidityUsd": 1856.9890510919809,
+        "quoteReserve": "2372283823536290463",
+        "realQuoteReserve": "692283823536290463"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 29.182166849847007,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 29.307728553240253,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 5360.0,
+      "entryRealReserve": "692283823536290463",
+      "exitRealReserve": "696497409996583978",
+      "entryToExitReserveChangePercent": 0.6086501398761435,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3642435943705684; realQuoteReserveWei=696497409996583978; coverageRatio=191.21747664503673; configuredMinimum=100; participation=0.00522964750683502; maxParticipationBps=100",
+        "previousReserveWei=770462406689285826; currentReserveWei=696497409996583978; changePercent=-9.6000786087063; peakReserveWei=780548894417329989; peakDropPercent=10.768253599729892; maxDropPercent=10",
+        "observations=13; required=3; spanMs=64000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=770462406689285826; currentReserveWei=696497409996583978; declinePercent=9.6000786087063"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "5bc56344-e988-4274-8eca-448efd2a2522",
+      "symbol": "IS",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-29T21:23:15.032Z",
+      "returnPercent": -51.77541842272285,
+      "pnlUsd": -5.322513013855909,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 95,
+        "curveProgressBps": 1907,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.1527155253483807,
+        "realLiquidityUsd": 2148.537446398373,
+        "quoteReserve": "2481152000476682951",
+        "realQuoteReserve": "801152000476682951"
+      },
+      "verifiedPreEntryObservations": 5,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 32.2895171405365,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 3.6590536168857506,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 95.0,
+      "entryRealReserve": "801152000476682951",
+      "exitRealReserve": "63806826766292663",
+      "entryToExitReserveChangePercent": -92.03561537282216,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=1869651579809418; realQuoteReserveWei=63806826766292663; coverageRatio=34.12765643361036; configuredMinimum=100; participation=0.02930174833262672; maxParticipationBps=100",
+        "previousReserveWei=989606384948788466; currentReserveWei=63806826766292663; changePercent=-93.55230243693357; peakReserveWei=989606384948788466; peakDropPercent=93.55230243693357; maxDropPercent=10",
+        "observations=18; required=3; spanMs=90000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=989606384948788466; currentReserveWei=63806826766292663; declinePercent=93.55230243693357"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "45b9b1c7-7bd8-4fc2-b792-eeaacb87524c",
+      "symbol": "BELL",
+      "strategyVersion": null,
+      "enteredAt": "2026-09-29T21:26:16.793Z",
+      "returnPercent": -0.584381496500009,
+      "pnlUsd": -0.06071723748635094,
+      "overTenPercent": false,
+      "entryReason": [
+        "Size = minimum of account capacity, token risk budget / downside fraction, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 5397,
+        "creatorTaxBps": 100,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.09617203298377953,
+        "realLiquidityUsd": 6074.970450907898,
+        "quoteReserve": "3946813852038051978",
+        "realQuoteReserve": "2266813852038051978"
+      },
+      "verifiedPreEntryObservations": 6,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 59.8745860318427,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 58.20709114587188,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 3494.0,
+      "entryRealReserve": "2266813852038051978",
+      "exitRealReserve": "2339820697008164984",
+      "entryToExitReserveChangePercent": 3.2206810852366097,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=3534589922216782; realQuoteReserveWei=2130394697008164984; coverageRatio=602.7275423430307; configuredMinimum=100; participation=0.0016591244463669613; maxParticipationBps=100",
+        "previousReserveWei=2506872692038051978; currentReserveWei=2130394697008164984; changePercent=-15.017834620226195; peakReserveWei=2506872692038051978; peakDropPercent=15.017834620226195; maxDropPercent=10",
+        "observations=2; required=3; spanMs=9000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=2506872692038051978; currentReserveWei=2130394697008164984; declinePercent=15.017834620226195"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "f5768007-d913-4850-81f5-1594a3308735",
+      "symbol": "CUEBOOK",
+      "strategyVersion": 3,
+      "enteredAt": "2026-09-30T16:27:32.476Z",
+      "returnPercent": -0.7158959431448864,
+      "pnlUsd": -0.03579479715724432,
+      "overTenPercent": false,
+      "entryReason": [
+        "Size = minimum of account capacity, stop-distance risk budget, 0.5% equity token gap-risk cap, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 4051,
+        "creatorTaxBps": 100,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.05388867181406723,
+        "realLiquidityUsd": 4573.1217327851155,
+        "quoteReserve": "3381702674272010601",
+        "realQuoteReserve": "1701702674272010601"
+      },
+      "verifiedPreEntryObservations": 13,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 50.32088383223523,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 51.16471623350725,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 2007.0000000000002,
+      "entryRealReserve": "1701702674272010601",
+      "exitRealReserve": "1760135636424201106",
+      "entryToExitReserveChangePercent": 3.4337938721985095,
+      "exitReason": "PROFIT_PROTECTION",
+      "exitReasoning": [
+        "Armed profit protection: executable return crossed the plan profit floor"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "8e46d5f6-ea2c-427e-8bb1-752fca42d01d",
+      "symbol": "CUEBOOK",
+      "strategyVersion": 3,
+      "enteredAt": "2026-09-30T16:28:20.788Z",
+      "returnPercent": -30.088359730176506,
+      "pnlUsd": -1.5044179865088254,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, stop-distance risk budget, 0.5% equity token gap-risk cap, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 5856,
+        "creatorTaxBps": 100,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.04402206558701635,
+        "realLiquidityUsd": 6610.596053837659,
+        "quoteReserve": "4139601087126641257",
+        "realQuoteReserve": "2459601087126641257"
+      },
+      "verifiedPreEntryObservations": 6,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 59.41637938920069,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 52.46306577787797,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 2183.0,
+      "entryRealReserve": "2459601087126641257",
+      "exitRealReserve": "1854094125948464630",
+      "entryToExitReserveChangePercent": -24.61809617613817,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=1327715296771561; realQuoteReserveWei=1854094125948464630; coverageRatio=1396.454594186595; configuredMinimum=100; participation=0.0007160991873011659; maxParticipationBps=100",
+        "previousReserveWei=2541066185916701189; currentReserveWei=1854094125948464630; changePercent=-27.034796014980945; peakReserveWei=2607766359370926283; peakDropPercent=28.901064342446336; maxDropPercent=10",
+        "observations=12; required=3; spanMs=55000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=2541066185916701189; currentReserveWei=1854094125948464630; declinePercent=27.034796014980945"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "c88093a5-982c-4066-b21e-bdf9c9ef54e4",
+      "symbol": "AI",
+      "strategyVersion": 3,
+      "enteredAt": "2026-10-01T15:03:39.436Z",
+      "returnPercent": -14.838347890470551,
+      "pnlUsd": -0.7419173945235276,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, stop-distance risk budget, 0.5% equity token gap-risk cap, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 6698,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.04095398760440874,
+        "realLiquidityUsd": 7564.466713108075,
+        "quoteReserve": "4493240722199605427",
+        "realQuoteReserve": "2813240722199605427"
+      },
+      "verifiedPreEntryObservations": 6,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 63.00928878089673,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 59.90150792346417,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 208.0,
+      "entryRealReserve": "2813240722199605427",
+      "exitRealReserve": "2509683733725923061",
+      "entryToExitReserveChangePercent": -10.790295550547068,
+      "exitReason": "TRAILING_EXIT",
+      "exitReasoning": [
+        "Liquidation drawdown 5.637% crossed plan trail 3.925%"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "04ade53f-8a0a-4c02-b386-539cb798c361",
+      "symbol": "ANONT",
+      "strategyVersion": 3,
+      "enteredAt": "2026-10-03T01:45:41.165Z",
+      "returnPercent": -26.085622307568183,
+      "pnlUsd": -1.3016725531476525,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, stop-distance risk budget, 0.5% equity token gap-risk cap, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 6126,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.04332017882854293,
+        "realLiquidityUsd": 6896.26843680239,
+        "quoteReserve": "4253186484133650220",
+        "realQuoteReserve": "2573186484133650220"
+      },
+      "verifiedPreEntryObservations": 13,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 60.500203641030645,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 54.53402072115865,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 2341.0,
+      "entryRealReserve": "2573186484133650220",
+      "exitRealReserve": "2015070526682412906",
+      "entryToExitReserveChangePercent": -21.689681680383377,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=1421558173715610; realQuoteReserveWei=2056603687567793968; coverageRatio=1446.7249568776551; configuredMinimum=100; participation=0.0006912163886065918; maxParticipationBps=100",
+        "previousReserveWei=2573186484133650220; currentReserveWei=2056603687567793968; changePercent=-20.07560663601811; peakReserveWei=2573186484133650220; peakDropPercent=20.07560663601811; maxDropPercent=10",
+        "observations=2; required=3; spanMs=9000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=2573186484133650220; currentReserveWei=2056603687567793968; declinePercent=20.07560663601811"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "a44d34c8-0d40-497d-acdc-667b3417c656",
+      "symbol": "SMARTPAY",
+      "strategyVersion": 3,
+      "enteredAt": "2026-10-04T18:06:06.425Z",
+      "returnPercent": -15.63021731102314,
+      "pnlUsd": -0.7799478438200547,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, stop-distance risk budget, 0.5% equity token gap-risk cap, and real-liquidity participation cap",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 6430,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.04173241990871541,
+        "realLiquidityUsd": 7294.956110180066,
+        "quoteReserve": "4380845286424631964",
+        "realQuoteReserve": "2700845286424631964"
+      },
+      "verifiedPreEntryObservations": 12,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 61.65123645872668,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 58.685597888066056,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 181.0,
+      "entryRealReserve": "2700845286424631964",
+      "exitRealReserve": "2386378584998862823",
+      "entryToExitReserveChangePercent": -11.643269720275573,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=1574573988083182; realQuoteReserveWei=2386378584998862823; coverageRatio=1515.5709436708887; configuredMinimum=100; participation=0.0006598173474993417; maxParticipationBps=100",
+        "previousReserveWei=2700845286424631964; currentReserveWei=2386378584998862823; changePercent=-11.64326972027557; peakReserveWei=2700845286424631964; peakDropPercent=11.64326972027557; maxDropPercent=10",
+        "observations=2; required=3; spanMs=4000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=2700845286424631964; currentReserveWei=2386378584998862823; declinePercent=11.64326972027557"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    },
+    {
+      "id": "4b3b0c3d-9c80-4d28-9b61-eafe2584b3ff",
+      "symbol": "BIGCOIN",
+      "strategyVersion": 3,
+      "enteredAt": "2026-10-04T18:41:44.687Z",
+      "returnPercent": -76.61416414582375,
+      "pnlUsd": -3.8153853744620227,
+      "overTenPercent": true,
+      "entryReason": [
+        "Size = minimum of account capacity, stop-distance risk budget, 0.5% equity token gap-risk cap, real-liquidity participation and full-exit coverage caps",
+        "Each proposed size must pass a sized quote; excess impact reduces size and triggers another quote",
+        "Final entry is separately re-quoted and all account limits are checked again"
+      ],
+      "entryInputs": {
+        "palermoScore": 100,
+        "curveProgressBps": 4225,
+        "creatorTaxBps": 0,
+        "snipeTaxBps": 0,
+        "protocolFeeBps": 100,
+        "impactPercent": 0.052804019024127596,
+        "realLiquidityUsd": 4793.759103380975,
+        "quoteReserve": "3454644739798602579",
+        "realQuoteReserve": "1774644739798602579"
+      },
+      "verifiedPreEntryObservations": 9,
+      "preEntryReserveFalling": false,
+      "pressureWeakening": null,
+      "priceSpikeBeforeEntry": null,
+      "preEntryFullSellRecorded": true,
+      "preEntrySellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 51.369818706801674,
+        "postMigration": false
+      },
+      "exitSellEvidence": {
+        "source": "Pons v2 sized curve model + Coinbase ETH/USD",
+        "side": "SELL",
+        "fullPosition": true,
+        "gasKnown": false,
+        "grossFitsRealReserve": true,
+        "realReserveSharePercent": 0.47640061545428,
+        "postMigration": false
+      },
+      "preEntrySellAgeMs": 408.0,
+      "entryRealReserve": "1774644739798602579",
+      "exitRealReserve": "8041841723094586",
+      "entryToExitReserveChangePercent": -99.54684779760441,
+      "exitReason": "LIQUIDITY_OR_QUOTE_DETERIORATION",
+      "exitReasoning": [
+        "positionExitWei=435429611398338; realQuoteReserveWei=8041841723094586; coverageRatio=18.468752497720647; configuredMinimum=100; participation=0.054145508751791256; maxParticipationBps=100",
+        "previousReserveWei=1647579388550652732; currentReserveWei=8041841723094586; changePercent=-99.51189959166892; peakReserveWei=1647579388550652732; peakDropPercent=99.51189959166892; maxDropPercent=10",
+        "observations=30; required=3; spanMs=89000; requiredSpanMs=30000; minimumRealReserveWei=10000000000000000",
+        "previousReserveWei=1647579388550652732; currentReserveWei=8041841723094586; declinePercent=99.51189959166892"
+      ],
+      "quoteFailures": 0,
+      "missingEvidence": "Price path, buy/sell flow and reaction delay cannot be inferred from entry/exit endpoints. Reserve decline over the hold does not establish its cause."
+    }
+  ],
+  "exitReasons": {
+    "DYNAMIC_RISK_EXIT": 2,
+    "PROFIT_PROTECTION": 1,
+    "LIQUIDITY_OR_QUOTE_DETERIORATION": 24,
+    "TRAILING_EXIT": 1,
+    "MAX_HOLD_EXIT": 2
+  },
+  "causalityWarning": "Saved observations describe outcomes, not proof of causation. Unknown data stays null. Historical cohort metrics describe saved accounting, not newly verified executable fills; legacy fills can fail present liquidity checks."
+}

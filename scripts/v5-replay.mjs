@@ -3,8 +3,11 @@ import {createReadStream} from 'node:fs';
 import {createInterface} from 'node:readline';
 import {writeFile,mkdir} from 'node:fs/promises';
 import {dirname,resolve} from 'node:path';
-import {initialPaperState,PAPER_CONFIG,monitorPaper,observeSnapshot,performance} from '../dist/src/paper.js';
-import {retainPaperState} from '../dist/src/paper-retention.js';
+import {pathToFileURL} from 'node:url';
+const moduleRoot=resolve(process.env.REPLAY_MODULE_ROOT??'dist/src');
+const {initialPaperState,PAPER_CONFIG,monitorPaper,observeSnapshot,performance}=await import(pathToFileURL(resolve(moduleRoot,'paper.js')).href);
+const {retainPaperState}=await import(pathToFileURL(resolve(moduleRoot,'paper-retention.js')).href);
+const modes=process.env.REPLAY_V5_ONLY==='true'?[['V5',5]]:[['SCALP',4],['V5',5]];
 const [input,output='reports/v5-replay.json']=process.argv.slice(2);
 if(!input)throw Error('Supply chronological JSONL market frames, not a closed-trade summary');
 if(resolve(input)===resolve(output)||resolve(output).includes('/runs/paper/'))throw Error('Output must be separate from account/evidence');
@@ -15,7 +18,7 @@ for await(const line of createInterface({input:createReadStream(input),crlfDelay
  for(const item of [...frame.buys,...frame.sells])if(item.result.status==='AVAILABLE'){
   const q=item.result.quote;if([q.timestamp,q.blockTimestamp,q.roundTrip?.sell.timestamp].filter(Boolean).some(t=>Date.parse(t)>now))throw Error('FUTURE_QUOTE');
  }
- for(const [name,version] of [['SCALP',4],['V5',5]]){
+ for(const [name,version] of modes){
   const state=portfolios[name]??=initialPaperState(now,{...PAPER_CONFIG,PAPER_STRATEGY_VERSION:version,STARTING_BALANCE_USD:Number(process.env.REPLAY_STARTING_EQUITY??50)});
   const sells=structuredClone(frame.sells),buys=structuredClone(frame.buys);
   const unavailable=(side)=>{missing[name][side]++;return {status:'NOT_PAPER_TRADABLE',reason:'REPLAY_EXACT_QUOTE_MISSING',details:['No price or fill inferred']};};
@@ -32,5 +35,9 @@ for await(const line of createInterface({input:createReadStream(input),crlfDelay
  frames++;
 }
 const results=Object.fromEntries(Object.entries(portfolios).map(([name,state])=>[name,{...performance(state),openPositions:state.positions.length,missing:missing[name],incomplete:state.positions.length>0||missing[name].buys>0||missing[name].sells>0}]));
-const report={frames,recordingSkippedFrames,incomplete:recordingSkippedFrames>0||Object.values(results).some(r=>r.incomplete),method:'Chronological frame-resolution replay; independent account cash/concurrency, saved position versions, exact sizes and two fresh SELL reads. No interpolation. Missing alternative sizes and post-exit quotes invalidate profitability comparison.',results,profitableClaim:false};
+const retainedEntryReasons=Object.fromEntries(Object.entries(portfolios).map(([name,state])=>{
+ const counts={};for(const d of state.decisions)counts[d.reason??d.outcome]=(counts[d.reason??d.outcome]??0)+1;
+ return [name,counts];
+}));
+const report={frames,recordingSkippedFrames,incomplete:recordingSkippedFrames>0||Object.values(results).some(r=>r.incomplete),method:'Chronological frame-resolution replay; independent account cash/concurrency, saved position versions, exact sizes and two fresh SELL reads. No interpolation. Missing alternative sizes and post-exit quotes invalidate profitability comparison.',results,retainedEntryReasons,profitableClaim:false};
 await mkdir(dirname(output),{recursive:true});await writeFile(output,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));

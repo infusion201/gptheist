@@ -31,6 +31,46 @@ test('V5 verified entry, reversal and missing quote evidence',async()=>{
   assert.equal(LiquiditySurvivalGate(c,q,state,f.time).result,'V5_ENTRY_REJECTED');
   delete q.roundTrip;assert.ok(LiquiditySurvivalGate(c,q,state,f.time).reasons.includes('SELL_QUOTE_UNAVAILABLE'));
 });
+test('V5 rejects a single price spike and an intervening fast reversal',async()=>{
+  const {f,c,q,state}=await setup();
+  const rows=state.liquidityHistory![c.launchId]!,current=rows.at(-1)!;
+  // All reserve observations grow, but the price only changes once.
+  rows[0]!.quoteReserveWei=rows[1]!.quoteReserveWei;
+  rows[0]!.tokenReserveRaw=rows[1]!.tokenReserveRaw;
+  assert.ok(LiquiditySurvivalGate(c,q,state,f.time).reasons.includes('V5_SINGLE_SPIKE_MOMENTUM'));
+  seedLiquidityHistory(state,c,q);
+  const fast={...current,block:current.block-1,timestamp:new Date(f.time-1000).toISOString(),
+    quoteReserveWei:String(BigInt(current.quoteReserveWei)*2n)};
+  state.liquidityHistory![c.launchId]=[state.liquidityHistory![c.launchId]![0]!,fast,current];
+  assert.ok(LiquiditySurvivalGate(c,q,state,f.time).reasons.includes('V5_PRICE_REVERSAL'));
+});
+test('V5 cannot label a below-2 profit factor cohort as target met',async()=>{
+  const {f,c,state}=await setup();enterPaper(state,c,1,f.time);
+  const p=state.positions[0]!;
+  state.positions=[];
+  state.trades=Array.from({length:100},(_,i)=>({...structuredClone(p),id:`pf-${i}`,exit:p.current,
+    exitedAt:new Date(f.time+i).toISOString(),pnlUsd:i<70?1:-1.5,returnPercent:i<70?10:-15,
+    exitReason:'MAX_HOLD_EXIT' as const,exitReasoning:[]}));
+  const {researchMetrics}=await import('../src/paper-research.js');
+  assert.equal(researchMetrics(state,f.time+100).strategyValidation.status,'BELOW_TARGET');
+  state.trades.forEach(t=>{if(t.pnlUsd<0)t.pnlUsd=-.5;});
+  assert.equal(researchMetrics(state,f.time+100).strategyValidation.status,'TARGET_MET');
+  state.trades=state.trades.slice(0,30);
+  assert.equal(researchMetrics(state,f.time+100).strategyValidation.status,'COLLECTING_EVIDENCE');
+});
+test('V5 strong momentum needs three recent full-position observations',async()=>{
+  const {f,c,state}=await setup();enterPaper(state,c,1,f.time);const p=state.positions[0]!;
+  const base=p.management.liquidity!.observations.at(-1)!;
+  p.current.notionalUsd=p.costBasisUsd*1.10;p.current.blockNumber=base.block+3;
+  p.management.peakLiquidationValueUsd=p.costBasisUsd*1.12;p.management.peakReturnPercent=12;
+  p.management.liquidity!.observations=[1,2,3].map(i=>({...base,block:base.block+i,
+    tokenUnits:p.entry.tokenUnits!,timestamp:new Date(f.time+i*1000).toISOString(),executableUsd:p.costBasisUsd*(1.06+i*.01),netExecutableUsd:p.costBasisUsd*(1.06+i*.01)}));
+  assert.equal(AdaptiveProfitExit(p,f.time+3000),null);
+  assert.equal(p.management.adaptive!.strongMomentum,true);
+  p.management.liquidity!.observations=p.management.liquidity!.observations.slice(-2);
+  assert.equal(AdaptiveProfitExit(p,f.time+3000)?.reason,'ADAPTIVE_PROFIT_EXIT');
+  assert.equal(p.management.adaptive!.strongMomentum,false);
+});
 test('V5 strong winner continues, weak trail exits, gap and maximum hold predicates',async()=>{
   const {f,c,state}=await setup();assert.equal(enterPaper(state,c,1,f.time).outcome,'PAPER_BUY');
   const p=state.positions[0]!,q=structuredClone(p.current);q.notionalUsd=p.costBasisUsd*1.12;
@@ -49,6 +89,18 @@ test('V5 high coverage cannot mask reserve emergency; missing sell never fabrica
   assert.equal(markPaperPosition(state,p.id,{status:'AVAILABLE',quote:q},f.time+1000),true);
   assert.ok(p.management.pendingExit?.reason==='RESERVE_DRAWDOWN' || p.management.pendingExit?.reason==='MULTIPLE_TRIGGERS');
   const cash=state.cash;markPaperPosition(state,p.id,{status:'NOT_PAPER_TRADABLE',reason:'RPC_TIMEOUT',details:[]},f.time+2000);
+  assert.equal(state.cash,cash);assert.equal(state.positions.length,1);
+});
+test('V5 unknown exit gas retains the position and cash; block mismatch rejects entry',async()=>{
+  const {f,c,q,state}=await setup();
+  q.roundTrip!.sell.blockNumber++;
+  assert.ok(LiquiditySurvivalGate(c,q,state,f.time).reasons.includes('V5_ROUND_TRIP_BLOCK_MISMATCH'));
+  q.roundTrip!.sell.blockNumber--;
+  assert.equal(enterPaper(state,c,1,f.time).outcome,'PAPER_BUY');
+  const p=state.positions[0]!,sell=structuredClone(p.current),cash=state.cash;
+  sell.costs.gasUsd=null;
+  assert.equal(markPaperPosition(state,p.id,{status:'AVAILABLE',quote:sell},f.time),false);
+  assert.equal(p.markReason,'GAS_ESTIMATE_UNAVAILABLE');
   assert.equal(state.cash,cash);assert.equal(state.positions.length,1);
 });
 test('rejection aggregation bounded retention and position protection',async()=>{

@@ -35,7 +35,8 @@ export function researchMetrics(state: PaperState, now = Date.now()) {
       netLiquidationPnlUsd: openUnrealizedPnlUsd === null ? null : netPnlUsd+openUnrealizedPnlUsd,
       status: cohortCount < strategy.minimumValidationTrades ? "COLLECTING_EVIDENCE" :
         unavailableOpen.length ? "UNVERIFIED_OPEN_EXPOSURE" :
-        winRatePercent! >= strategy.targetWinRatePercent && netPnlUsd > 0 && netPnlUsd+openUnrealizedPnlUsd! > 0 ? "TARGET_MET" : "BELOW_TARGET" },
+        winRatePercent! >= strategy.targetWinRatePercent && netPnlUsd > 0 && netPnlUsd+openUnrealizedPnlUsd! > 0 &&
+          (strategy.version !== 5 || (grossLoss > 0 && grossProfit/grossLoss >= 2)) ? "TARGET_MET" : "BELOW_TARGET" },
     knownTaxesUsd: fills.reduce((sum, q) => sum + (q.evidence ? (Number(q.evidence.creatorTaxWei) + Number(q.evidence.snipeTaxWei)) / 1e18 * q.evidence.ethUsd : 0), 0),
     unknownTaxFills: fills.filter(q => !q.evidence).length,
     totalOpportunities: state.researchLedger ? Object.keys(state.researchLedger).length : null,

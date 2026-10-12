@@ -1,0 +1,51 @@
+{
+  "frames": 26,
+  "recordingSkippedFrames": 0,
+  "incomplete": false,
+  "method": "Chronological frame-resolution replay; independent account cash/concurrency, saved position versions, exact sizes and two fresh SELL reads. No interpolation. Missing alternative sizes and post-exit quotes invalidate profitability comparison.",
+  "results": {
+    "V5": {
+      "totalTrades": 0,
+      "wins": 0,
+      "losses": 0,
+      "winRate": 0,
+      "grossProfit": 0,
+      "grossLoss": 0,
+      "netPnl": 0,
+      "averageWin": null,
+      "averageLoss": null,
+      "profitFactor": null,
+      "expectancy": null,
+      "maximumDrawdown": 0,
+      "maximumDrawdownUsd": 0,
+      "peakEquity": 50,
+      "averageHoldingTime": null,
+      "estimatedFees": {
+        "knownUsd": 0,
+        "unknownFills": 0
+      },
+      "estimatedSlippage": {
+        "knownUsd": 0,
+        "unknownFills": 0
+      },
+      "estimatedGasCosts": {
+        "knownUsd": 0,
+        "unknownFills": 0
+      },
+      "openPositions": 0,
+      "missing": {
+        "buys": 0,
+        "sells": 0
+      },
+      "incomplete": false
+    }
+  },
+  "retainedEntryReasons": {
+    "V5": {
+      "STALE_LAUNCH": 64,
+      "INSUFFICIENT_TRACTION": 24,
+      "GPTHEIST_VETO": 12
+    }
+  },
+  "profitableClaim": false
+}

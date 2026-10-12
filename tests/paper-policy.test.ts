@@ -193,9 +193,11 @@ test("source health is independent of research; LIVE expires and failures degrad
     return new Response(JSON.stringify({ bid: "2000", ask: "2000", time: f.state.usd.timestamp }));
   }) as typeof fetch, () => now);
   assert.equal(service.status().status, "DEGRADED");
+  assert.ok(service.status().degradationReasons.includes('NO_VERIFIED_QUOTE'));
   await service.refreshUsd(); assert.equal(service.status().ethUsd.status, "LIVE"); assert.equal(service.status().status, "DEGRADED");
   await service.buy(f.launch, 10); assert.equal(service.status().status, "LIVE");
   now += 31_000; assert.equal(service.status().status, "DEGRADED"); assert.equal(service.status().ethUsd.status, "ETH_USD_STALE");
+  assert.equal(service.status().quoteAgeMs,31000);assert.ok(service.status().degradationReasons.includes('ETH_USD_STALE'));
   fail = true; await service.refreshUsd(); assert.equal(service.status().ethUsd.status, "ETH_USD_UNAVAILABLE");
 });
 

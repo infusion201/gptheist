@@ -17,6 +17,8 @@ export function LiquiditySurvivalGate(candidate: Candidate, q: PaperQuote, state
   const sell = q.roundTrip?.sell;
   if (!sell) result.reasons.push('SELL_QUOTE_UNAVAILABLE');
   else {
+    if(sell.blockNumber!==q.blockNumber || sell.evidence?.blockHash!==q.evidence?.blockHash)
+      result.reasons.push('V5_ROUND_TRIP_BLOCK_MISMATCH');
     const stale=quoteProblem(sell,now,state.config.QUOTE_MAX_AGE_MS,state.config.ETH_USD_MAX_AGE_MS);
     if(stale) result.reasons.push(stale);
     const observation=sellObservation(sell,q.notionalUsd);
@@ -29,6 +31,34 @@ export function LiquiditySurvivalGate(candidate: Candidate, q: PaperQuote, state
   const quality=entryQuality(candidate,q,now,policy), execution=entryExecutionQuality(q,rows,now,policy);
   if(!quality.passed) result.reasons.push(quality.reason!);
   if(!execution.passed) result.reasons.push(execution.reason!);
+  // Confirm price persistence on pinned ETH/token ratios, independent of USD moves
+  // and historical ticket sizes. Include fast samples so spacing cannot hide a crash.
+  const current = sell && sellObservation(sell,q.notionalUsd);
+  if (current) {
+    const time=Date.parse(current.timestamp);
+    const history=rows.filter(r=>r.token.toLowerCase()===current.token.toLowerCase() &&
+      r.curve.toLowerCase()===current.curve.toLowerCase() && r.block<current.block &&
+      time-Date.parse(r.timestamp)>0 && time-Date.parse(r.timestamp)<=policy.maxQuoteMomentumSpanMs);
+    const series=[...history,current];
+    try {
+      if(series.some((r,i)=>r.sellResult!=='AVAILABLE' || !/^[1-9][0-9]*$/.test(r.realQuoteReserveWei) ||
+        BigInt(r.quoteReserveWei)<=0n || BigInt(r.tokenReserveRaw)<=0n ||
+        (i>0 && (r.block<=series[i-1]!.block || Date.parse(r.timestamp)<=Date.parse(series[i-1]!.timestamp)))))
+        throw Error('invalid observation');
+      if(series.some((r,i)=>i>0 && BigInt(r.realQuoteReserveWei)<BigInt(series[i-1]!.realQuoteReserveWei)))
+        result.reasons.push('V5_REAL_RESERVE_WITHDRAWAL');
+      const rising=(a:LiquidityObservation,b:LiquidityObservation)=>
+        BigInt(b.quoteReserveWei)*BigInt(a.tokenReserveRaw)>BigInt(a.quoteReserveWei)*BigInt(b.tokenReserveRaw);
+      if(series.some((r,i)=>i>0 && !rising(series[i-1]!,r) &&
+        BigInt(r.quoteReserveWei)*BigInt(series[i-1]!.tokenReserveRaw)<BigInt(series[i-1]!.quoteReserveWei)*BigInt(r.tokenReserveRaw)))
+        result.reasons.push('V5_PRICE_REVERSAL');
+      const spaced:LiquidityObservation[]=[current];
+      for(let i=history.length-1;i>=0 && spaced.length<policy.confirmationSamples;i--)
+        if(Date.parse(spaced[0]!.timestamp)-Date.parse(history[i]!.timestamp)>=policy.minQuoteMomentumSpanMs) spaced.unshift(history[i]!);
+      if(spaced.length<policy.confirmationSamples) result.reasons.push('V5_PRICE_PERSISTENCE_INSUFFICIENT');
+      else if(spaced.some((r,i)=>i>0 && !rising(spaced[i-1]!,r))) result.reasons.push('V5_SINGLE_SPIKE_MOMENTUM');
+    } catch { result.reasons.push('V5_PRICE_EVIDENCE_INVALID'); }
+  }
   const observed=candidate.tractionDiagnostics?.observations.filter(r=>r.verificationStatus==='VERIFIED') ?? [];
   if(observed.length>=3) {
     const values=observed.map(r=>Number(r.reserve)), last=values.at(-1)!, peak=Math.max(...values);
@@ -70,8 +100,14 @@ export function v5RiskTriggers(p: Position, current: LiquidityObservation, previ
 export function AdaptiveProfitExit(p: Position, now: number): ExitDecision | null {
   const policy=p.plan.exitPolicy, value=p.current.notionalUsd-(p.current.costs.gasUsd??0), ret=(value/p.costBasisUsd-1)*100;
   const peak=p.management.peakLiquidationValueUsd??value, peakReturn=p.management.peakReturnPercent??ret;
-  const rows=p.management.liquidity?.observations??[], last=rows.at(-1), prior=rows.at(-2);
-  const strong=!!last && !!prior && last.block>prior.block && last.executableUsd!==null && prior.executableUsd!==null && last.executableUsd>prior.executableUsd && BigInt(last.realQuoteReserveWei)>=BigInt(prior.realQuoteReserveWei);
+  const rows=p.management.liquidity?.observations??[], last=rows.at(-1);
+  const recent=rows.slice(-3);
+  const strong=recent.length===3 && !!last && last.block===p.current.blockNumber &&
+    recent.every((r,i)=>r.sellResult==='AVAILABLE' && r.tokenUnits===p.entry.tokenUnits &&
+      r.netExecutableUsd!=null && Number.isFinite(r.netExecutableUsd) && now-Date.parse(r.timestamp)>=0 && now-Date.parse(r.timestamp)<=30_000 &&
+      (i===0 || (r.block>recent[i-1]!.block && Date.parse(r.timestamp)>Date.parse(recent[i-1]!.timestamp) &&
+        r.curve===recent[i-1]!.curve && r.netExecutableUsd>recent[i-1]!.netExecutableUsd! &&
+        BigInt(r.realQuoteReserveWei)>=BigInt(recent[i-1]!.realQuoteReserveWei))));
   const trail=strong?Math.max(policy.trailingDrawdownPercent,Math.min(5,peakReturn*.25)):Math.min(1.5,policy.trailingDrawdownPercent);
   const floor=Math.max(policy.profitFloorPercent??.5,peakReturn*(strong?.25:.5));
   p.management.adaptive={ netLiquidationUsd:value, peakNetLiquidationUsd:peak, armed:peakReturn>=policy.profitArmPercent, strongMomentum:strong, trailingPercent:trail, profitFloorPercent:floor };

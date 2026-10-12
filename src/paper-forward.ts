@@ -1,5 +1,5 @@
 import { constants } from 'node:fs';
-import { open, readdir, stat, unlink } from 'node:fs/promises';
+import { open, readdir, realpath, stat, unlink } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { ensureSafeAuditDirectory } from './simulation.js';
 import type { PaperMarketFrame } from './paper-laboratory.js';
@@ -12,6 +12,30 @@ export class ForwardRecorder {
   private error: string | null = null;
   constructor(private readonly directory: string, private readonly maxBytes = 128*1048576, private readonly retentionMs = 86_400_000) {}
   status() { return { written:this.written, skipped:this.skipped, pending:this.pending, error:this.error, maxBytes:this.maxBytes,retentionMs:this.retentionMs }; }
+  /** Pin existing bytes by descriptor; normal append/pruning can continue. Caller closes handles. */
+  exportFiles() {
+    const work=this.tail.then(()=>this.captureExportFiles());
+    this.tail=work.then(()=>undefined,()=>undefined);
+    return work;
+  }
+  private async captureExportFiles() {
+    const files: { name: string; handle: import('node:fs/promises').FileHandle; size: number }[]=[];
+    try {
+      const actual=await realpath(this.directory).catch(error=>{if(error.code==='ENOENT')return null;throw error;});
+      if(actual===null)return files;
+      if(actual!==resolve(this.directory))throw Error('Research directory must not contain symlinks');
+      const names=await readdir(this.directory).catch(error=>{if(error.code==='ENOENT')return [];throw error;});
+      for(const name of names.filter(n=>/^research-\d{13}\.jsonl$/.test(n)).sort()) {
+        let handle;
+        try { handle=await open(resolve(this.directory,name),constants.O_RDONLY|constants.O_NOFOLLOW|constants.O_NONBLOCK); }
+        catch(error) { if((error as NodeJS.ErrnoException).code==='ENOENT')continue;throw error; }
+        const info=await handle.stat();
+        if(!info.isFile()){await handle.close();throw Error('Invalid research file');}
+        files.push({name,handle,size:info.size});
+      }
+      return files;
+    } catch(error) {await Promise.all(files.map(f=>f.handle.close()));throw error;}
+  }
   record(frame: PaperMarketFrame): Promise<void> {
     if(this.pending>=2) { this.skipped++;return Promise.resolve(); }
     this.pending++;

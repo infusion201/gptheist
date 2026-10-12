@@ -50,10 +50,15 @@
   "devDependencies": {
     "@types/fs-ext": "^2.0.3",
     "@types/node": "^18.19.0",
-    "typescript": "^5.7.0"
+    "@types/yauzl": "^3.4.0",
+    "@types/yazl": "^3.3.1",
+    "typescript": "^5.7.0",
+    "yauzl": "^3.4.0"
   },
   "dependencies": {
+    "@streamparser/json": "^0.0.26",
     "fs-ext": "^2.1.1",
-    "viem": "^2.56.3"
+    "viem": "^2.56.3",
+    "yazl": "^3.3.1"
   }
 }

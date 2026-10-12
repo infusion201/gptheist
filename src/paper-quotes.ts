@@ -369,7 +369,13 @@ export class PaperQuoteService {
   status() {
     const usdStatus = this.usdError ?? (!this.lastUsd ? "ETH_USD_UNAVAILABLE" : fresh(this.lastUsd.timestamp, this.clock(), this.config.ETH_USD_MAX_AGE_MS) ? "LIVE" : "ETH_USD_STALE");
     const quoteFresh = this.lastQuote && !quoteProblem(this.lastQuote, this.clock(), this.config.QUOTE_MAX_AGE_MS, this.config.ETH_USD_MAX_AGE_MS);
+    const degradationReasons=[
+      ...(!this.lastQuote ? ['NO_VERIFIED_QUOTE'] : quoteFresh ? [] : [quoteProblem(this.lastQuote,this.clock(),this.config.QUOTE_MAX_AGE_MS,this.config.ETH_USD_MAX_AGE_MS)!]),
+      ...(usdStatus==='LIVE'?[]:[usdStatus]), ...(this.lastAttempt?.reason?[this.lastAttempt.reason]:[])
+    ];
     return { pendingRequests: this.pendingQuotes.size, lanes:{entry:this.entryLane.status(),exit:this.exitLane.status()}, status: quoteFresh && usdStatus === "LIVE" && this.lastAttempt?.reason === null ? "LIVE" : "DEGRADED",
+      degradationReasons:[...new Set(degradationReasons)],
+      quoteAgeMs:this.lastQuote ? this.clock()-Date.parse(this.lastQuote.timestamp) : null,
       gas: this.gas.status(usdStatus === "LIVE" ? this.lastUsd?.ask ?? null : null),
       quoteSource: this.lastQuote?.source ?? "Pons curve / awaiting verified quote", lastAttempt: this.lastAttempt,
       lastQuoteTimestamp: this.lastQuote?.timestamp ?? null,

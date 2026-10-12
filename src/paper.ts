@@ -370,6 +370,7 @@ export function markPaperPosition(state: PaperState, id: string, result: QuoteRe
   p.quoteFailureDetails = result.status === "AVAILABLE" ? [] : result.details;
   const q = result.status === "AVAILABLE" ? result.quote : null;
   const problem = q ? quoteProblem(q, now, state.config.QUOTE_MAX_AGE_MS, state.config.ETH_USD_MAX_AGE_MS) ??
+    (p.plan.strategyVersion===5 && q.costs.gasUsd===null ? "GAS_ESTIMATE_UNAVAILABLE" : null) ??
     (q.side !== "SELL" || q.tokenAddress.toLowerCase() !== p.tokenAddress.toLowerCase() || Math.abs(q.quantity - p.quantity) > p.quantity * 1e-10 ||
      (p.entry.tokenUnits && q.tokenUnits !== p.entry.tokenUnits) ? "QUOTE_MISMATCH" : null) : result.status === "NOT_PAPER_TRADABLE" ? result.reason : "QUOTE_UNAVAILABLE";
   const liquidity = !problem && q ? sellObservation(q) : failedSellObservation(result, p.tokenAddress, p.entry.evidence?.curve ?? "", now, state.config);

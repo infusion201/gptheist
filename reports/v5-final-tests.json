@@ -1,0 +1,8 @@
+{
+  "command": "npm test",
+  "tests": 242,
+  "passed": 242,
+  "failed": 0,
+  "durationMs": 29138.228278,
+  "scope": "Full suite, including synthetic V5 entry/exit, quote outage, gas, persistence and unchanged V4 policy checks. Synthetic tests do not prove profitability."
+}

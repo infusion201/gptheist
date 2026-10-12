@@ -1,0 +1,178 @@
+{
+  "syntheticInfrastructureOnly": true,
+  "sourceBytes": 282394720,
+  "sourceRecords": 65536,
+  "sourceFiles": 8,
+  "durationMs": 10591,
+  "zipBytes": 1462710,
+  "peakRssMiB": 298.3125,
+  "sustainedRssMiB": 250.41686197916667,
+  "workerHeapLimitMiB": 128,
+  "parentHeapLimitMiB": 384,
+  "monitorQuotesWhileExporting": 104,
+  "cgroupMemoryMax": "max",
+  "containerLimitEnforced": false,
+  "acceptance": {
+    "rssBelow500MiB": true,
+    "rssBelow650MiB": true,
+    "cashPreserved": true,
+    "positionsPreserved": true,
+    "noExitCreated": true,
+    "monitorContinued": true,
+    "zipReady": true
+  },
+  "samples": [
+    {
+      "rss": 105738240,
+      "heapTotal": 33071104,
+      "heapUsed": 13822440,
+      "external": 2455610,
+      "arrayBuffers": 145943,
+      "elapsedMs": 50
+    },
+    {
+      "rss": 117501952,
+      "heapTotal": 33742848,
+      "heapUsed": 14315512,
+      "external": 2659948,
+      "arrayBuffers": 350281,
+      "elapsedMs": 554
+    },
+    {
+      "rss": 123162624,
+      "heapTotal": 36093952,
+      "heapUsed": 20496232,
+      "external": 3832996,
+      "arrayBuffers": 1523329,
+      "elapsedMs": 1055
+    },
+    {
+      "rss": 130527232,
+      "heapTotal": 55529472,
+      "heapUsed": 26603928,
+      "external": 4768636,
+      "arrayBuffers": 2458969,
+      "elapsedMs": 1558
+    },
+    {
+      "rss": 141045760,
+      "heapTotal": 52637696,
+      "heapUsed": 19102904,
+      "external": 3325449,
+      "arrayBuffers": 1015782,
+      "elapsedMs": 2060
+    },
+    {
+      "rss": 160477184,
+      "heapTotal": 55656448,
+      "heapUsed": 26811112,
+      "external": 4833491,
+      "arrayBuffers": 2523824,
+      "elapsedMs": 2569
+    },
+    {
+      "rss": 172814336,
+      "heapTotal": 98562048,
+      "heapUsed": 45668248,
+      "external": 9358465,
+      "arrayBuffers": 7048798,
+      "elapsedMs": 3075
+    },
+    {
+      "rss": 188506112,
+      "heapTotal": 97812480,
+      "heapUsed": 41640472,
+      "external": 7431040,
+      "arrayBuffers": 5121373,
+      "elapsedMs": 3599
+    },
+    {
+      "rss": 202469376,
+      "heapTotal": 99065856,
+      "heapUsed": 46123536,
+      "external": 8189350,
+      "arrayBuffers": 5879683,
+      "elapsedMs": 4141
+    },
+    {
+      "rss": 191782912,
+      "heapTotal": 88907776,
+      "heapUsed": 16985288,
+      "external": 11076011,
+      "arrayBuffers": 145943,
+      "elapsedMs": 4739
+    },
+    {
+      "rss": 215404544,
+      "heapTotal": 98922496,
+      "heapUsed": 42583216,
+      "external": 7462316,
+      "arrayBuffers": 5152649,
+      "elapsedMs": 5360
+    },
+    {
+      "rss": 225222656,
+      "heapTotal": 170430464,
+      "heapUsed": 57200504,
+      "external": 10610296,
+      "arrayBuffers": 8304232,
+      "elapsedMs": 6027
+    },
+    {
+      "rss": 219447296,
+      "heapTotal": 160997376,
+      "heapUsed": 31432848,
+      "external": 11384566,
+      "arrayBuffers": 3189621,
+      "elapsedMs": 6632
+    },
+    {
+      "rss": 238084096,
+      "heapTotal": 172310528,
+      "heapUsed": 52991792,
+      "external": 9155928,
+      "arrayBuffers": 6849864,
+      "elapsedMs": 7315
+    },
+    {
+      "rss": 275529728,
+      "heapTotal": 181043200,
+      "heapUsed": 74186952,
+      "external": 13259176,
+      "arrayBuffers": 10953112,
+      "elapsedMs": 8013
+    },
+    {
+      "rss": 266416128,
+      "heapTotal": 165191680,
+      "heapUsed": 24841384,
+      "external": 13924816,
+      "arrayBuffers": 4045431,
+      "elapsedMs": 8559
+    },
+    {
+      "rss": 280129536,
+      "heapTotal": 169938944,
+      "heapUsed": 42270840,
+      "external": 6660925,
+      "arrayBuffers": 4354861,
+      "elapsedMs": 9304
+    },
+    {
+      "rss": 260505600,
+      "heapTotal": 161259520,
+      "heapUsed": 21802744,
+      "external": 11257911,
+      "arrayBuffers": 145943,
+      "elapsedMs": 9913
+    },
+    {
+      "rss": 302403584,
+      "heapTotal": 170844160,
+      "heapUsed": 66729912,
+      "external": 7113443,
+      "arrayBuffers": 4807379,
+      "elapsedMs": 10591
+    }
+  ]
+}

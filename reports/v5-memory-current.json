@@ -1,0 +1,98 @@
+{
+  "syntheticInfrastructureOnly": true,
+  "containerLimitEnforced": false,
+  "cgroupMemoryMax": "max\n",
+  "nodeHeapLimitMiB": 384,
+  "durationMs": 62672,
+  "cycles": 220,
+  "launches": 2640,
+  "networkFailures": 44,
+  "restarts": 2,
+  "initial": {
+    "rss": 91512832,
+    "heapTotal": 53518336,
+    "heapUsed": 20048376,
+    "external": 2466583,
+    "arrayBuffers": 211619
+  },
+  "peakRss": 465264640,
+  "sustainedRss": 444790101.3333333,
+  "final": {
+    "rss": 434728960,
+    "heapTotal": 263766016,
+    "heapUsed": 162440720,
+    "external": 2398345,
+    "arrayBuffers": 145939,
+    "pressure": "NORMAL",
+    "eventLoopDelayMs": 208.25975466666665,
+    "elapsedMs": 62633,
+    "counts": {
+      "activeCandidates": 128,
+      "candidateObservations": 12800,
+      "processedTokens": 384,
+      "quoteRecords": 315,
+      "activityEvents": 200,
+      "openPositions": 5,
+      "closedTrades": 100,
+      "equityRecords": 250
+    }
+  },
+  "peakPending": 32,
+  "peakCandidates": 128,
+  "limits": {
+    "candidates": 128,
+    "observations": 100,
+    "rejections": 100,
+    "quoteSamples": 128,
+    "rpcConcurrency": 6,
+    "pendingRpc": 128
+  },
+  "samples": [
+    {
+      "rss": 285978624,
+      "heapTotal": 222883840,
+      "heapUsed": 101976784,
+      "external": 13085501,
+      "arrayBuffers": 10305753,
+      "pressure": "NORMAL",
+      "eventLoopDelayMs": 506.486272,
+      "elapsedMs": 8837,
+      "counts": {
+        "activeCandidates": 128,
+        "candidateObservations": 12800,
+        "processedTokens": 240,
+        "quoteRecords": 325,
+        "activityEvents": 200,
+        "openPositions": 5,
+        "closedTrades": 100,
+        "equityRecords": 111
+      }
+    },
+    {
+      "rss": 434728960,
+      "heapTotal": 263766016,
+      "heapUsed": 162440720,
+      "external": 2398345,
+      "arrayBuffers": 145939,
+      "pressure": "NORMAL",
+      "eventLoopDelayMs": 208.25975466666665,
+      "elapsedMs": 62633,
+      "counts": {
+        "activeCandidates": 128,
+        "candidateObservations": 12800,
+        "processedTokens": 384,
+        "quoteRecords": 315,
+        "activityEvents": 200,
+        "openPositions": 5,
+        "closedTrades": 100,
+        "equityRecords": 250
+      }
+    }
+  ],
+  "acceptance": {
+    "rssBelow500MiB": true,
+    "sustainedBelow650MiB": true,
+    "activePositionsPreserved": true,
+    "queueDrained": true
+  }
+}

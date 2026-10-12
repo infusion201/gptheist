@@ -101,6 +101,7 @@ export const PAPER_SCALP_STRATEGY = Object.freeze({ ...PAPER_STRATEGY_V3, versio
 });
 /** One experimental V5 profile; gap exposure capped independently of stop distance. */
 export const PAPER_V5_STRATEGY = Object.freeze({ ...PAPER_STRATEGY_V3, version: 5,
+  minimumValidationTrades: 100,
   maxTokenExposurePercent: 2, maxRoundTripLossPercent: 3, minRealReserveShareBps: 3000,
   confirmationSamples: 3, recentSamples: 5, minReserveGrowthPercent: 1,
   minLatestReserveGrowthPercent: .25, minPositiveStepRatio: .75, maxReserveDrawdownPercent: 2,

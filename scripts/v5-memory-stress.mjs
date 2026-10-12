@@ -5,13 +5,15 @@ import {join,dirname} from 'node:path';
 import {setTimeout as delay} from 'node:timers/promises';
 import {fixture} from '../dist/tests/paper-fixtures.js';
 import {seedLiquidityHistory,seedEntryQuality} from '../dist/tests/liquidity-history-fixture.js';
-import {initialPaperState,liveCandidate,enterPaper,markPaperPosition,activity,accountSummary} from '../dist/src/paper.js';
+import {initialPaperState,PAPER_CONFIG,liveCandidate,enterPaper,markPaperPosition,activity,accountSummary} from '../dist/src/paper.js';
 import {retainPaperState,collectionCounts} from '../dist/src/paper-retention.js';
 import {WorkLimiter,MemoryHealth,runtimeLimits} from '../dist/src/runtime-limits.js';
 import {PaperStore} from '../dist/src/paper-store.js';
 const seconds=Number(process.env.STRESS_SECONDS??60),output=process.argv[2]??'reports/v5-memory-stress.json';
-const f=fixture(),state=initialPaperState(f.time),q=await f.buy(1);
+const f=fixture();f.state.fee=0n;if(f.launch.market.status==='VERIFIED')f.launch.market.creatorTaxBps=0;
+const state=initialPaperState(f.time,{...PAPER_CONFIG,PAPER_STRATEGY_VERSION:5}),q=await f.buy(1);
 if(q.status!=='AVAILABLE')throw Error('fixture');
+q.quote.costs.gasUsd=0;q.quote.roundTrip.sell.costs.gasUsd=0;
 const base=liveCandidate(f.launch);base.quote=q;
 for(let i=0;i<5;i++){
  const c=structuredClone(base),address=`0x${(i+10).toString(16).padStart(40,'0')}`;
@@ -54,7 +56,7 @@ try{
   peakPending=Math.max(peakPending,limiter.status().pending);
   await store.update(s=>{Object.assign(s,structuredClone(state));});
   for(let i=0;i<20;i++)JSON.stringify(store.read()); // bounded dashboard request serialization
-  if(cycles%400===0){const before=accountSummary(store.read());await store.close();store=await PaperStore.open(directory,()=>f.time+cycles*4000);if(JSON.stringify(accountSummary(store.read()))!==JSON.stringify(before))throw Error('Recovery mismatch');restarts++;}
+  if(restarts===0 || cycles%200===0){const before=accountSummary(store.read());await store.close();store=await PaperStore.open(directory,()=>f.time+cycles*4000);if(JSON.stringify(accountSummary(store.read()))!==JSON.stringify(before))throw Error('Recovery mismatch');restarts++;}
   samples.push({...health.sample(),elapsedMs:Date.now()-start,counts:collectionCounts(state)});
   if(state.positions.length!==5)throw Error('Lost active exit state');
  }

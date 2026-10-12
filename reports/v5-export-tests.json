@@ -1,0 +1,10 @@
+{
+  "command": "npm test",
+  "tests": 249,
+  "pass": 249,
+  "fail": 0,
+  "durationMs": 23051.199433,
+  "syntaxChecksPassed": true,
+  "diffWhitespaceCheckPassed": true,
+  "note": "Includes the full suite and seven ZIP/authentication/export safety tests; no production service was deployed or restarted."
+}

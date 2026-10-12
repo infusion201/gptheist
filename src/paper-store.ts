@@ -160,6 +160,8 @@ export class PaperStore {
     return { trades: record.trades ?? [], next: record.previousTrades ?? null };
   }
   status() { return { directory: this.directory, lastSuccessfulWrite: this.lastSuccessfulWrite, error: this.writeError, pendingUpdates: this.pendingUpdates, singleWriter: !this.closed }; }
+  strategyVersion() { return this.state.config.PAPER_STRATEGY_VERSION; }
+  async exportSnapshot(): Promise<PaperState> { await this.tail; return this.read(); }
   /** Consistent state plus immutable referenced archives, streamed one record at a time. No credentials. */
   async *exportRecords(): AsyncGenerator<{ name: string; data: unknown }> {
     await this.tail;

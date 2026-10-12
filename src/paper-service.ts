@@ -214,6 +214,7 @@ export class PaperService {
     return this.pending;
   }
   health() { return {memory:this.memory, persistence:this.store.status(),rpc:rpcWorkStatus(this.rpc)}; }
+  exportResearchFiles() { return this.forward.exportFiles(); }
   view() {
     const state = this.store.read();
     const latestDecisions = new Map<string, typeof state.decisions[number]>();
