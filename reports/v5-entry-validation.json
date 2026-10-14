@@ -1,0 +1,205 @@
+{
+  "syntheticSafetyValidation": true,
+  "futureObservationsUsed": false,
+  "conditions": "Chronological verified mock contract reads, production integer quotes and complete entry pipeline; 1% protocol fee and known positive gas. No seeded confirmation history. These are test fixtures, not real filled trades.",
+  "totals": {
+    "discovered": 10,
+    "traction": 8,
+    "momentum": 4,
+    "liquidity": 5,
+    "sizing": 5,
+    "eligible": 4
+  },
+  "results": [
+    {
+      "mode": "HEALTHY",
+      "equity": 250,
+      "gas": 0.010651,
+      "quoteCalls": 9,
+      "stages": {
+        "discovered": 1,
+        "traction": 1,
+        "momentum": 1,
+        "liquidity": 1,
+        "sizing": 1,
+        "eligible": 1
+      },
+      "positions": 1,
+      "reason": "ALL_PAPER_GATES_CLEARED",
+      "size": 4.98,
+      "allInCost": 4.990651000000001,
+      "confirmationSpanMs": 30000
+    },
+    {
+      "mode": "HEALTHY",
+      "equity": 200,
+      "gas": 0.01,
+      "quoteCalls": 9,
+      "stages": {
+        "discovered": 1,
+        "traction": 1,
+        "momentum": 1,
+        "liquidity": 1,
+        "sizing": 1,
+        "eligible": 1
+      },
+      "positions": 1,
+      "reason": "ALL_PAPER_GATES_CLEARED",
+      "size": 3.99,
+      "allInCost": 4,
+      "confirmationSpanMs": 30000
+    },
+    {
+      "mode": "HEALTHY",
+      "equity": 1000,
+      "gas": 0.01,
+      "quoteCalls": 9,
+      "stages": {
+        "discovered": 1,
+        "traction": 1,
+        "momentum": 1,
+        "liquidity": 1,
+        "sizing": 1,
+        "eligible": 1
+      },
+      "positions": 1,
+      "reason": "ALL_PAPER_GATES_CLEARED",
+      "size": 19.98,
+      "allInCost": 19.990000000000002,
+      "confirmationSpanMs": 30000
+    },
+    {
+      "mode": "HEALTHY",
+      "equity": 100,
+      "gas": 0.004,
+      "quoteCalls": 9,
+      "stages": {
+        "discovered": 1,
+        "traction": 1,
+        "momentum": 1,
+        "liquidity": 1,
+        "sizing": 1,
+        "eligible": 1
+      },
+      "positions": 1,
+      "reason": "ALL_PAPER_GATES_CLEARED",
+      "size": 1.99,
+      "allInCost": 1.994,
+      "confirmationSpanMs": 30000
+    },
+    {
+      "mode": "SINGLE_SPIKE",
+      "equity": 200,
+      "gas": 0.01,
+      "quoteCalls": 4,
+      "stages": {
+        "discovered": 1,
+        "traction": 1,
+        "momentum": 0,
+        "liquidity": 0,
+        "sizing": 0,
+        "eligible": 0
+      },
+      "positions": 0,
+      "reason": "ENTRY_MOMENTUM_WEAK",
+      "size": null,
+      "allInCost": null,
+      "confirmationSpanMs": null
+    },
+    {
+      "mode": "FALLING",
+      "equity": 200,
+      "gas": 0.01,
+      "quoteCalls": 4,
+      "stages": {
+        "discovered": 1,
+        "traction": 0,
+        "momentum": 0,
+        "liquidity": 0,
+        "sizing": 0,
+        "eligible": 0
+      },
+      "positions": 0,
+      "reason": "INSUFFICIENT_TRACTION",
+      "size": null,
+      "allInCost": null,
+      "confirmationSpanMs": null
+    },
+    {
+      "mode": "MISSING",
+      "equity": 200,
+      "gas": 0.01,
+      "quoteCalls": 6,
+      "stages": {
+        "discovered": 1,
+        "traction": 1,
+        "momentum": 0,
+        "liquidity": 0,
+        "sizing": 0,
+        "eligible": 0
+      },
+      "positions": 0,
+      "reason": "RPC_TIMEOUT",
+      "size": null,
+      "allInCost": null,
+      "confirmationSpanMs": null
+    },
+    {
+      "mode": "THIN",
+      "equity": 200,
+      "gas": 0.01,
+      "quoteCalls": 4,
+      "stages": {
+        "discovered": 1,
+        "traction": 0,
+        "momentum": 0,
+        "liquidity": 0,
+        "sizing": 0,
+        "eligible": 0
+      },
+      "positions": 0,
+      "reason": "INSUFFICIENT_TRACTION",
+      "size": null,
+      "allInCost": null,
+      "confirmationSpanMs": null
+    },
+    {
+      "mode": "GAS",
+      "equity": 200,
+      "gas": 0.2,
+      "quoteCalls": 9,
+      "stages": {
+        "discovered": 1,
+        "traction": 1,
+        "momentum": 0,
+        "liquidity": 1,
+        "sizing": 1,
+        "eligible": 0
+      },
+      "positions": 0,
+      "reason": "ENTRY_FRICTION_TOO_HIGH",
+      "size": null,
+      "allInCost": null,
+      "confirmationSpanMs": null
+    },
+    {
+      "mode": "HEALTHY",
+      "equity": 50,
+      "gas": 0.01,
+      "quoteCalls": 6,
+      "stages": {
+        "discovered": 1,
+        "traction": 1,
+        "momentum": 0,
+        "liquidity": 0,
+        "sizing": 0,
+        "eligible": 0
+      },
+      "positions": 0,
+      "reason": "SIZE_NOT_EXECUTABLE",
+      "size": null,
+      "allInCost": null,
+      "confirmationSpanMs": null
+    }
+  ]
+}

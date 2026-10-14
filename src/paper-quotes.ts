@@ -270,7 +270,12 @@ export async function readPaperQuote(
   if (result.status !== "AVAILABLE") diagnostics.failure = result.reason;
   if (order.side === "BUY" && result.status === "AVAILABLE") {
     const buy = result.quote;
-    const sell = await readPaperQuote(rpc, usd, launch, { side: "SELL", tokenUnits: buy.tokenUnits!, quantity: buy.quantity, tokenDecimals: buy.evidence!.tokenDecimals }, clock, config);
+    // V5 compares a same-block round trip. Its SELL must use the actual BUY block,
+    // rather than asking for another latest block while the chain advances.
+    const sellRpc:RpcCaller=config.PAPER_STRATEGY_VERSION===5 ? (method,params)=>
+      method==='eth_blockNumber'?Promise.resolve(`0x${buy.blockNumber.toString(16)}`):rpc(method,params) : rpc;
+    if(sellRpc!==rpc){const cache=launchHeaders.get(rpc)??new Map();launchHeaders.set(rpc,cache);launchHeaders.set(sellRpc,cache);}
+    const sell = await readPaperQuote(sellRpc, usd, launch, { side: "SELL", tokenUnits: buy.tokenUnits!, quantity: buy.quantity, tokenDecimals: buy.evidence!.tokenDecimals }, clock, config);
     if (sell.status !== "AVAILABLE") return { ...sell, details: [...sell.details, "Pre-entry full-quantity SELL validation failed"], diagnostics: { ...diagnostics, failure: sell.reason, roundTripSell: sell } };
     const problem = quoteProblem(buy, clock(), config.QUOTE_MAX_AGE_MS, config.ETH_USD_MAX_AGE_MS);
     if (problem) return { ...unavailable(problem), diagnostics };

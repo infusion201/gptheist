@@ -112,7 +112,8 @@ export function proposeTradePlan(state: PaperState, candidate: Candidate, quote:
     exitPolicy.reasons.push("V5 adaptive executable-profit trail; 2% equity gap exposure cap; reserve emergencies remain immediate");
   }
   const entryGasUsd = quote.costs.gasUsd ?? 0;
-  const proposedSizeUsd = cents(Math.min(account.availableCapacityUsd - entryGasUsd, riskBudgetUsd / (downsidePercent / 100) - entryGasUsd,
+  const sizingDownsidePercent=policy.version===5?exitPolicy.downsidePercent:downsidePercent;
+  const proposedSizeUsd = cents(Math.min(account.availableCapacityUsd - entryGasUsd, riskBudgetUsd / (sizingDownsidePercent / 100) - entryGasUsd,
     account.equityUsd * policy.maxTokenExposurePercent / 100 - entryGasUsd,
     quote.liquidityUsd * state.config.MAX_REAL_LIQUIDITY_PERCENT / 100,
     quote.liquidityUsd / state.config.MIN_EXIT_COVERAGE_RATIO,

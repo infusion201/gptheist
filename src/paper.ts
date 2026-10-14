@@ -1,4 +1,5 @@
 import { LiquiditySurvivalGate, v5RiskTriggers } from "./paper-v5.js";
+import { entryStage, rejectedEntryStage, type EntryTrace } from './paper-entry-diagnostics.js';
 import { entryQuality, entryRegimeRejection, entryExecutionQuality, roundTripLossPercent, getPaperStrategy, entryPolicyConfig, PAPER_STRATEGY } from "./paper-strategy.js";
 import { V4, v4PoolId, type V4Evidence, type V4Route } from "./uniswap-v4.js";
 import { sellObservation, failedSellObservation, appendLiquidityObservation, ExitLiquiditySafetyGate, type LiquidityObservation } from "./paper-liquidity.js";
@@ -56,6 +57,7 @@ export interface QuoteDiagnostics {
 export type QuoteResult = ({ status: "AVAILABLE"; quote: PaperQuote } |
   { status: "NOT_PAPER_TRADABLE"; reason: string; details: string[] }) & { diagnostics?: QuoteDiagnostics };
 export interface Candidate extends LaunchEvidence {
+  entryTrace?:EntryTrace;
   paperEngineReceivedAtMs?: number | null;
   tokenAddress: string; name: string; symbol: string; launchId: string;
   launch?: LiveLaunchDecision;
@@ -94,6 +96,7 @@ export interface ClosedTrade extends Position {
 export interface CandidateDecision extends Eligibility { timestamp: string; candidate: Candidate; sizeUsd: number; gptheistVerdict: Candidate["decision"]; paperVerdict: Eligibility["outcome"]; plan?: PaperTradePlan }
 export interface EquitySnapshot { timestamp: string; equity: number; stalePositions: number }
 export interface PaperState {
+  lastEligiblePaperAt?:string;
   archiveHead?: string;
   archiveTradeHead?: string;
   archivedDailyLoss?: { day: string; loss: number };
@@ -185,6 +188,7 @@ export function paperLaunchRejection(c: Candidate, state: PaperState, now: numbe
 }
 export function isPaperTradeEligible(candidate: Candidate, state: PaperState, sizeUsd: number, now = Date.now()): Eligibility {
   const policy = getPaperStrategy(state.config), entryConfig = entryPolicyConfig(state.config);
+  if(policy.version===5 && candidate.entryTrace){delete candidate.entryTrace.momentum;delete candidate.entryTrace.liquidity;delete candidate.entryTrace.eligible;}
   const reject = (reason: string, outcome: Eligibility["outcome"] = "PAPER_REJECT", details: string[] = []): Eligibility => ({ outcome, reason, details });
   if (candidate.decision === "VETO" || candidate.handoffs.some(h => h.outcome === "VETO")) return reject("GPTHEIST_VETO", "VETO");
   if (candidate.decision !== "WATCH" || !candidate.evidenceComplete || !completedWatch(candidate.handoffs)) return reject("INCOMPLETE_GPTHEIST_WATCH");
@@ -216,6 +220,7 @@ export function isPaperTradeEligible(candidate: Candidate, state: PaperState, si
   if (dailyRealizedLoss(state, now) >= state.config.MAX_DAILY_LOSS_USD) return reject("DAILY_LOSS_LIMIT");
   if (sizeUsd + (q.costs.gasUsd ?? 0) > state.cash) return reject("INSUFFICIENT_PAPER_CASH");
   if (state.cash - sizeUsd - (q.costs.gasUsd ?? 0) < capacity.equityUsd * state.config.MIN_CASH_RESERVE_PERCENT / 100 - 1e-8) return reject("MIN_CASH_RESERVE");
+  entryStage(state,candidate,'sizing',true,'Fresh sized quote fits exposure, cash and capacity limits',now);
   const sell = q.roundTrip?.sell;
   if (!sell) return reject("EXIT_QUOTE_UNAVAILABLE");
   if (!q.evidence || !sell.evidence || !q.tokenUnits || !/^[1-9][0-9]*$/.test(q.tokenUnits)) return reject("TOKEN_UNITS_UNVERIFIED");
@@ -231,10 +236,12 @@ export function isPaperTradeEligible(candidate: Candidate, state: PaperState, si
   if (!observation) return reject("CURVE_STATE_UNAVAILABLE", "PAPER_REJECT", ["Full SELL reserve evidence missing"]);
   const safety = ExitLiquiditySafetyGate(observation, state.liquidityHistory?.[candidate.launchId] ?? [], entryConfig);
   if (safety.reason) return reject(safety.reason, "PAPER_REJECT", safety.details);
+  entryStage(state,candidate,'liquidity',true,'Verified full-position exit and liquidity history',now);
   const traction = candidate.recentTraction;
   if (traction.status !== "VERIFIED" || (traction.progressChangeBps ?? 0) <= 0 ||
       !/^[1-9][0-9]*$/.test(traction.reserveChangeWei ?? "") || traction.toTimestamp == null ||
       now / 1000 - traction.toTimestamp < 0 || now / 1000 - traction.toTimestamp > state.config.PAPER_MAX_LAUNCH_AGE_SECONDS) return reject("INSUFFICIENT_TRACTION");
+  entryStage(state,candidate,'traction',true,'Verified positive reserve and curve changes',now);
   if (candidate.launch) {
     const quality = entryQuality(candidate, q, now, policy);
     if (!quality.passed) return reject(quality.reason!, "PAPER_REJECT", [JSON.stringify(quality)]);
@@ -243,8 +250,9 @@ export function isPaperTradeEligible(candidate: Candidate, state: PaperState, si
   }
   if(policy.version===5) {
     const survival=LiquiditySurvivalGate(candidate,q,state,now);
-    if(survival.result!=="V5_ENTRY_APPROVED") return reject(survival.result,"PAPER_REJECT",[JSON.stringify(survival)]);
+    if(survival.result!=="V5_ENTRY_APPROVED") {for(const reason of survival.reasons)rejectedEntryStage(state,candidate,reason,now);return reject(survival.result,"PAPER_REJECT",[JSON.stringify(survival)]);}
   }
+  entryStage(state,candidate,'momentum',true,'Reserve, priced momentum and survival checks passed',now);
   return { outcome: "PAPER_ELIGIBLE", reason: "ALL_PAPER_GATES_CLEARED", details: ["SIMULATED_EXECUTION", "Social quality is unverified; gas and execution drift are excluded when unknown"] };
 }
 /** Every agent must finish in order. INFO is honest completion, not fabricated PASS evidence. */
@@ -327,14 +335,20 @@ export function enterPaper(state: PaperState, candidate: Candidate, sizeUsd: num
       ...(result.reason === "BACKFILL_EVENT" ? { eventProvenance: Object.fromEntries(result.details.map(detail => {
         const separator = detail.indexOf("="); return [detail.slice(0, separator), detail.slice(separator + 1)];
       })) } : {}) });
+  if(!plan && state.config.PAPER_STRATEGY_VERSION===5 && result.outcome==='PAPER_ELIGIBLE' && candidate.quote.status==='AVAILABLE') {
+    plan=proposeTradePlan(state,candidate,candidate.quote.quote,now);plan.approvedSizeUsd=sizeUsd;
+  }
   const planStrategy = (plan?.strategyVersion === 4 || plan?.strategyVersion === 5) ? getPaperStrategy({ PAPER_STRATEGY_VERSION: plan.strategyVersion }, plan.account.equityUsd) : PAPER_STRATEGY;
-  if (plan && (plan.strategyVersion ?? 0) >= 2 && sizeUsd > plan.account.equityUsd * planStrategy.maxTokenExposurePercent / 100 + 1e-8) {
+  const plannedExposureUsd=sizeUsd+(plan?.strategyVersion===5 && candidate.quote.status==='AVAILABLE'?(candidate.quote.quote.costs.gasUsd??0):0);
+  if (plan && (plan.strategyVersion ?? 0) >= 2 && plannedExposureUsd > plan.account.equityUsd * planStrategy.maxTokenExposurePercent / 100 + 1e-8) {
     result = { outcome: "PAPER_REJECT", reason: "PLAN_GAP_RISK_CAP", details: [] };
   }
-  if (plan && (Math.abs(plan.approvedSizeUsd - sizeUsd) > 1e-8 || sizeUsd * plan.exitPolicy.downsidePercent / 100 > plan.riskBudgetUsd + 1e-8)) {
+  if (plan && (Math.abs(plan.approvedSizeUsd - sizeUsd) > 1e-8 || plannedExposureUsd * plan.exitPolicy.downsidePercent / 100 > plan.riskBudgetUsd + 1e-8)) {
     result = { outcome: "PAPER_REJECT", reason: "PLAN_RISK_BUDGET", details: [] };
   }
   const observation = state.researchLedger?.[candidate.launchId];
+  if(result.outcome!=='PAPER_ELIGIBLE')rejectedEntryStage(state,candidate,result.reason,now);
+  else {entryStage(state,candidate,'eligible',true,result.reason,now);if(state.config.PAPER_STRATEGY_VERSION===5)state.lastEligiblePaperAt=iso(now);}
   if (observation) { observation.lastResult = result.reason; observation.lastOutcome = result.outcome; if (result.outcome === "PAPER_ELIGIBLE") observation.traded = true; }
   const recorded = structuredClone(candidate);
   if (recorded.quote.status === "AVAILABLE" && quoteProblem(recorded.quote.quote, now, state.config.QUOTE_MAX_AGE_MS)) {
@@ -475,7 +489,13 @@ async function observeEntryLiquidity(state: PaperState, candidate: Candidate, qu
   const history = state.liquidityHistory?.[candidate.launchId] ?? [];
   if (history.at(-1)?.block === candidate.currentBlock) return;
   const rows = candidate.tractionDiagnostics?.observations ?? [], last = rows.at(-1), previous = rows.at(-2);
-  if (!last || !previous || last.verificationStatus !== "VERIFIED" || previous.verificationStatus !== "VERIFIED" ||
+  if(state.config.PAPER_STRATEGY_VERSION===5) {
+    if(!last || last.verificationStatus!=='VERIFIED' || !last.reserve || BigInt(last.reserve)<=0n) return;
+    // Observe plateaus and withdrawals too. Evidence collection is not entry approval.
+    // Sample distinct blocks at most once per ten seconds; final entry reads stay fresh.
+    const prior=history.at(-1);
+    if(prior && clock()-Date.parse(prior.observedAt)<getPaperStrategy(state.config).minQuoteMomentumSpanMs) return;
+  } else if (!last || !previous || last.verificationStatus !== "VERIFIED" || previous.verificationStatus !== "VERIFIED" ||
       !last.reserve || !previous.reserve || BigInt(last.reserve) <= BigInt(previous.reserve) ||
       (last.curveProgressBps ?? 0) <= (previous.curveProgressBps ?? 0)) return;
   let result: QuoteResult;
@@ -542,6 +562,7 @@ export function observeCandidateTraction(state: PaperState, candidate: Candidate
     tractionWindowSeconds: config.TRACTION_WINDOW_SECONDS, positiveReserveChangeDetected,
     positiveCurveChangeDetected, tractionPass, exactFailureReason };
   candidate.tractionDiagnostics = diagnostics;
+  entryStage(state,candidate,'traction',tractionPass,exactFailureReason??'Verified reserve and curve growth',clock());
   candidate.recentTraction = { ...candidate.recentTraction,
     status: !enough ? "UNKNOWN" : tractionPass ? "VERIFIED" : "WEAK",
     ...(first ? { fromBlock: first.block, fromTimestamp: Date.parse(first.timestamp)/1000 } : {}),
@@ -638,6 +659,7 @@ export async function observeSnapshot(state: PaperState, snapshot: LiveSnapshot,
 /** Separate experimental paper policy and sizing; never rewrites the GPTHEIST verdict. */
 export async function preparePaperTrade(state: PaperState, candidate: Candidate, quotes: EntryQuoteProvider, clock = Date.now): Promise<void> {
   const policy = getPaperStrategy(state.config, accountCapacity(state, clock()).equityUsd);
+  if(policy.version===5){candidate.entryTrace={};entryStage(state,candidate,'traction',candidate.tractionDiagnostics?.tractionPass===true,candidate.tractionDiagnostics?.exactFailureReason??'Verified traction',clock());}
   if (!candidate.launch) return;
   if (paperLaunchRejection(candidate, state, clock())) { enterPaper(state, candidate, state.config.MIN_POSITION_USD, clock()); return; }
   if ((candidate.tractionDiagnostics?.tractionPass !== true || candidate.recentTraction.status !== "VERIFIED" || (candidate.recentTraction.progressChangeBps ?? 0) <= 0 ||
@@ -696,6 +718,7 @@ export async function preparePaperTrade(state: PaperState, candidate: Candidate,
   activity(state, "QUOTE_VERIFIED", "Fresh sized curve quote and ETH/USD reference", clock(), candidate);
   let plan = proposeTradePlan(state, candidate, candidate.quote.quote, clock());
   let size = Math.min(plan.proposedSizeUsd, probeSize);
+  entryStage(state,candidate,'sizing',size>=state.config.MIN_POSITION_USD,`proposedUsd=${size}; minNotionalUsd=${state.config.MIN_POSITION_USD}; gasUsd=${candidate.quote.quote.costs.gasUsd}; riskBudgetUsd=${plan.riskBudgetUsd}; stopPercent=${plan.exitPolicy.downsidePercent}`,clock());
   let iterations = 0;
   const attempts: PaperTradePlan["sizingAttempts"] = [];
   while (size >= state.config.MIN_POSITION_USD && iterations++ < 12) {
@@ -721,7 +744,8 @@ export async function preparePaperTrade(state: PaperState, candidate: Candidate,
         plan = { ...finalPlan, proposedSizeUsd: plan.proposedSizeUsd, approvedSizeUsd: size, sizingAttempts: attempts };
         enterPaper(state, candidate, size, clock(), plan); return;
       }
-      if (gate.reason === "ENTRY_FRICTION_TOO_HIGH" && policy.version === 4 && (candidate.quote.quote.costs.gasUsd ?? 0) > 0) { enterPaper(state, candidate, size, clock()); return; }
+      if (gate.reason === "ENTRY_FRICTION_TOO_HIGH" && ((policy.version === 4 && (candidate.quote.quote.costs.gasUsd ?? 0) > 0) ||
+          (policy.version===5 && size/2<state.config.MIN_POSITION_USD))) { enterPaper(state, candidate, size, clock()); return; }
       if (!["PRICE_IMPACT_LIMIT", "INSUFFICIENT_LIQUIDITY", "ENTRY_FRICTION_TOO_HIGH", "EXIT_COVERAGE_TOO_LOW", "REAL_LIQUIDITY_CAP"].includes(gate.reason)) { enterPaper(state, candidate, size, clock()); return; }
     } else {
       attempts.push({ sizeUsd: size, outcome: candidate.quote.reason, impactPercent: null });
@@ -740,5 +764,6 @@ export async function preparePaperTrade(state: PaperState, candidate: Candidate,
     `price_impact=${q?.costs.priceImpactPercent ?? "UNAVAILABLE"}; slippage=${q?.costs.slippageUsd ?? "UNAVAILABLE"}`,
     `available_liquidity_usd=${q?.liquidityUsd ?? "UNAVAILABLE"}; real_exit_reserve_wei=${q?.evidence?.realQuoteReserve ?? "UNAVAILABLE"}; quote_reserve_wei=${q?.evidence?.quoteReserve ?? "UNAVAILABLE"}`,
     `max_executable_usd=${maxExecutableUsd}; quote_source=${q?.source ?? "UNAVAILABLE"}`,
+    ...(policy.version===5?[`account_equity_usd=${capacity.equityUsd}; all_in_token_cap_usd=${capacity.equityUsd*policy.maxTokenExposurePercent/100}; minimum_notional_usd=${state.config.MIN_POSITION_USD}; entry_gas_usd=${q?.costs.gasUsd??'UNKNOWN'}; saved_stop_percent=${plan.exitPolicy.downsidePercent}; risk_budget_usd=${plan.riskBudgetUsd}`]:[]),
     `exact_SIZE_NOT_EXECUTABLE_condition=${stopCondition}`]);
 }

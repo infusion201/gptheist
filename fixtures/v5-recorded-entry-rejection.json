@@ -1,0 +1,487 @@
+{
+  "provenance": "Actual retained local candidate observations; not a Railway export and not synthetic successful trades. No quote was inferred.",
+  "snapshotAt": "2026-10-14T14:36:42.540Z",
+  "decision": {
+    "outcome": "PAPER_REJECT",
+    "reason": "ENTRY_MOMENTUM_WEAK",
+    "details": [
+      "{\"passed\":false,\"reason\":\"ENTRY_MOMENTUM_WEAK\",\"samples\":3,\"reserveGrowthPercent\":112.714218791668,\"latestReserveGrowthPercent\":112.714218791668,\"positiveStepRatio\":0.5,\"reserveDrawdownPercent\":0,\"confirmationSpanMs\":24000,\"roundTripLossPercent\":null}",
+      "mint=0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+      "symbol=CHALK",
+      "observation_count=8",
+      "verified_observation_count=8",
+      "traction_window_seconds=300",
+      "positive_reserve_change_detected=true",
+      "positive_curve_change_detected=true",
+      "traction_pass=true",
+      "exact_failure_reason=NONE"
+    ],
+    "timestamp": "2026-10-14T14:36:30.536Z",
+    "candidate": {
+      "launchBlock": 88442769,
+      "launchTimestamp": 1791988560,
+      "sourceEventId": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a:4",
+      "eventOccurredAtMs": 1791988560000,
+      "firstObservedAtMs": 1791988562377,
+      "eventAgeAtFirstObservationSeconds": 2.377,
+      "classificationReason": "EVENT_AFTER_PERSISTED_HEAD",
+      "source": "Robinhood Chain RPC eth_getLogs",
+      "discoveredAtMs": 1791988590367,
+      "normalizedAtMs": 1791988590368,
+      "ingestedAtMs": 1791988590461,
+      "currentBlock": 88443060,
+      "currentTimestamp": 1791988589,
+      "tokenAgeSeconds": 29,
+      "firstBlockSeenByProcess": 88442783,
+      "eventMode": "LIVE",
+      "launchBlockHash": "0x2d45b616d1420e8fb82e9d88b65c95d7be6dbb91a0c0592047766e8da9ca6d67",
+      "currentBlockHash": "0xbfc4b03cdbcc998f137433cf076c4d5b76b9723084f614f4cae501a2ff71221e",
+      "recentTraction": {
+        "status": "VERIFIED",
+        "lastVerifiedActivityTime": null,
+        "explanation": "Verified reserve and curve progress both increased across the configured observation window",
+        "fromBlock": 88442783,
+        "toBlock": 88443060,
+        "fromTimestamp": 1791988561,
+        "toTimestamp": 1791988589,
+        "progressChangeBps": 443,
+        "reserveChangeWei": "186057242277695621",
+        "creatorTaxChangeBps": 0,
+        "snipeTaxChangeBps": 0
+      },
+      "launch": {
+        "token": "0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+        "blockHash": "0x2d45b616d1420e8fb82e9d88b65c95d7be6dbb91a0c0592047766e8da9ca6d67",
+        "curve": "0x564ba886b6128d235a018418026f5c4a70ccc18e",
+        "deployer": "0x5994d8e557f558e98dfc24f340bc84ba75d49e86",
+        "pairToken": "0x0000000000000000000000000000000000000000",
+        "launchConfigId": "0",
+        "graduationThreshold": "4200000000000000000",
+        "blockNumber": 88442769,
+        "transactionHash": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a",
+        "logIndex": 4,
+        "chronology": {
+          "launchBlock": 88442769,
+          "launchTimestamp": 1791988560,
+          "sourceEventId": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a:4",
+          "eventOccurredAtMs": 1791988560000,
+          "firstObservedAtMs": 1791988562377,
+          "eventAgeAtFirstObservationSeconds": 2.377,
+          "classificationReason": "EVENT_AFTER_PERSISTED_HEAD",
+          "source": "Robinhood Chain RPC eth_getLogs",
+          "discoveredAtMs": 1791988590367,
+          "normalizedAtMs": 1791988590368,
+          "ingestedAtMs": 1791988590461,
+          "currentBlock": 88443060,
+          "currentTimestamp": 1791988589,
+          "tokenAgeSeconds": 29,
+          "firstBlockSeenByProcess": 88442783,
+          "eventMode": "LIVE",
+          "launchBlockHash": "0x2d45b616d1420e8fb82e9d88b65c95d7be6dbb91a0c0592047766e8da9ca6d67",
+          "currentBlockHash": "0xbfc4b03cdbcc998f137433cf076c4d5b76b9723084f614f4cae501a2ff71221e",
+          "recentTraction": {
+            "status": "WEAK",
+            "lastVerifiedActivityTime": null,
+            "explanation": "Pinned state delta only; direction is not momentum. Unchanged endpoints do not prove inactivity. Exact last activity time unknown.",
+            "fromBlock": 88443021,
+            "toBlock": 88443060,
+            "fromTimestamp": 1791988585,
+            "toTimestamp": 1791988589,
+            "progressChangeBps": 0,
+            "reserveChangeWei": "0",
+            "creatorTaxChangeBps": 0,
+            "snipeTaxChangeBps": 0
+          }
+        },
+        "pairLabel": "ETH",
+        "market": {
+          "status": "VERIFIED",
+          "creatorFeeRecipient": "0x5994d8e557f558e98dfc24f340bc84ba75d49e86",
+          "creatorTaxBps": 250,
+          "buybackEnabled": false,
+          "phase": "CURVE",
+          "quoteReserve": "1885357242277695621",
+          "tokenReserve": "891077808665267054233629158",
+          "realQuoteReserve": "205357242277695621",
+          "graduationThreshold": "4200000000000000000",
+          "progressBps": 488,
+          "currentSnipeTaxBps": 0
+        },
+        "metadata": {
+          "status": "DECLARED",
+          "name": "Chalk 20",
+          "symbol": "CHALK",
+          "logo": "ipfs://bafkreifzfg4ylnngffub4j5ybqsvtcl4qdfxbv6ep5jkhfzyjuueqtz2mi",
+          "description": "Fair-mint inscriptions on Robinhood Chain.",
+          "socials": {
+            "twitter": "https://x.com/Chalkonrh",
+            "telegram": "",
+            "discord": "",
+            "website": "https://chalk20.com",
+            "farcaster": ""
+          }
+        },
+        "assessment": {
+          "verdict": "WATCH",
+          "score": 80,
+          "reasons": [
+            "Verified factory provenance (+25)",
+            "Native ETH pair (+15)",
+            "Active curve phase (+10)",
+            "Positive on-chain reserves (+5)",
+            "Creator tax at or below 5% (+5)",
+            "Current snipe tax at or below 2% (+10)",
+            "4.88% curve progress (+10)"
+          ],
+          "blockers": [],
+          "unknowns": [
+            "Executable slippage and social quality are not measured"
+          ]
+        },
+        "verdict": "WATCH",
+        "handoffs": [
+          {
+            "sequence": 1,
+            "timestamp": "2026-10-14T14:36:30.518Z",
+            "agent": "TOKYO",
+            "role": "Scout",
+            "outcome": "INFO",
+            "message": "Detected Pons v2 launch in block 88442769."
+          },
+          {
+            "sequence": 2,
+            "timestamp": "2026-10-14T14:36:30.518Z",
+            "agent": "BERLIN",
+            "role": "Planner / criteria",
+            "outcome": "INFO",
+            "message": "Policy locked: observe verified factory events; never sign or execute."
+          },
+          {
+            "sequence": 3,
+            "timestamp": "2026-10-14T14:36:30.518Z",
+            "agent": "RIO",
+            "role": "Technical / chart analysis",
+            "outcome": "PASS",
+            "message": "Curve state verified: 4.88% to graduation; current snipe tax 0%."
+          },
+          {
+            "sequence": 4,
+            "timestamp": "2026-10-14T14:36:30.518Z",
+            "agent": "DENVER",
+            "role": "Social-signal quality",
+            "outcome": "INFO",
+            "message": "Social evidence not claimed by this read-only feed."
+          },
+          {
+            "sequence": 5,
+            "timestamp": "2026-10-14T14:36:30.518Z",
+            "agent": "LISBON",
+            "role": "Data / handoff validation",
+            "outcome": "PASS",
+            "message": "Factory record and curve state verified against the launch event."
+          },
+          {
+            "sequence": 6,
+            "timestamp": "2026-10-14T14:36:30.518Z",
+            "agent": "STOCKHOLM",
+            "role": "Liquidity / slippage / position sizing",
+            "outcome": "INFO",
+            "message": "Native ETH pair and reserves verified at 4.88% curve progress, but executable quote and slippage evidence are not available yet."
+          },
+          {
+            "sequence": 7,
+            "timestamp": "2026-10-14T14:36:30.518Z",
+            "agent": "NAIROBI",
+            "role": "Signal brief",
+            "outcome": "INFO",
+            "message": "Brief: on-chain evidence verified; creator tax 2.5%; social and slippage checks remain unresolved."
+          },
+          {
+            "sequence": 8,
+            "timestamp": "2026-10-14T14:36:30.518Z",
+            "agent": "HELSINKI",
+            "role": "Append-only audit / logistics",
+            "outcome": "INFO",
+            "message": "Explorer-linked trace 2717e3ca516e647b prepared."
+          },
+          {
+            "sequence": 9,
+            "timestamp": "2026-10-14T14:36:30.518Z",
+            "agent": "PALERMO",
+            "role": "Red-team veto gate",
+            "outcome": "PASS",
+            "message": "Watch gate cleared at 80/100; unresolved evidence remains visible."
+          },
+          {
+            "sequence": 10,
+            "timestamp": "2026-10-14T14:36:30.518Z",
+            "agent": "PROFESSOR",
+            "role": "Final coordinator / decision",
+            "outcome": "PASS",
+            "message": "WATCH approved for read-only monitoring; no order was sent."
+          }
+        ],
+        "deployerResearch": {
+          "windowBlocks": 25000,
+          "priorLaunches": 0,
+          "priorGraduations": 0
+        }
+      },
+      "tokenAddress": "0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+      "name": "Chalk 20",
+      "symbol": "CHALK",
+      "launchId": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a:4",
+      "decision": "WATCH",
+      "evidenceComplete": true,
+      "handoffs": [
+        {
+          "sequence": 1,
+          "timestamp": "2026-10-14T14:36:30.518Z",
+          "agent": "TOKYO",
+          "role": "Scout",
+          "outcome": "INFO",
+          "message": "Detected Pons v2 launch in block 88442769."
+        },
+        {
+          "sequence": 2,
+          "timestamp": "2026-10-14T14:36:30.518Z",
+          "agent": "BERLIN",
+          "role": "Planner / criteria",
+          "outcome": "INFO",
+          "message": "Policy locked: observe verified factory events; never sign or execute."
+        },
+        {
+          "sequence": 3,
+          "timestamp": "2026-10-14T14:36:30.518Z",
+          "agent": "RIO",
+          "role": "Technical / chart analysis",
+          "outcome": "PASS",
+          "message": "Curve state verified: 4.88% to graduation; current snipe tax 0%."
+        },
+        {
+          "sequence": 4,
+          "timestamp": "2026-10-14T14:36:30.518Z",
+          "agent": "DENVER",
+          "role": "Social-signal quality",
+          "outcome": "INFO",
+          "message": "Social evidence not claimed by this read-only feed."
+        },
+        {
+          "sequence": 5,
+          "timestamp": "2026-10-14T14:36:30.518Z",
+          "agent": "LISBON",
+          "role": "Data / handoff validation",
+          "outcome": "PASS",
+          "message": "Factory record and curve state verified against the launch event."
+        },
+        {
+          "sequence": 6,
+          "timestamp": "2026-10-14T14:36:30.518Z",
+          "agent": "STOCKHOLM",
+          "role": "Liquidity / slippage / position sizing",
+          "outcome": "INFO",
+          "message": "Native ETH pair and reserves verified at 4.88% curve progress, but executable quote and slippage evidence are not available yet."
+        },
+        {
+          "sequence": 7,
+          "timestamp": "2026-10-14T14:36:30.518Z",
+          "agent": "NAIROBI",
+          "role": "Signal brief",
+          "outcome": "INFO",
+          "message": "Brief: on-chain evidence verified; creator tax 2.5%; social and slippage checks remain unresolved."
+        },
+        {
+          "sequence": 8,
+          "timestamp": "2026-10-14T14:36:30.518Z",
+          "agent": "HELSINKI",
+          "role": "Append-only audit / logistics",
+          "outcome": "INFO",
+          "message": "Explorer-linked trace 2717e3ca516e647b prepared."
+        },
+        {
+          "sequence": 9,
+          "timestamp": "2026-10-14T14:36:30.518Z",
+          "agent": "PALERMO",
+          "role": "Red-team veto gate",
+          "outcome": "PASS",
+          "message": "Watch gate cleared at 80/100; unresolved evidence remains visible."
+        },
+        {
+          "sequence": 10,
+          "timestamp": "2026-10-14T14:36:30.518Z",
+          "agent": "PROFESSOR",
+          "role": "Final coordinator / decision",
+          "outcome": "PASS",
+          "message": "WATCH approved for read-only monitoring; no order was sent."
+        }
+      ],
+      "quote": {
+        "status": "NOT_PAPER_TRADABLE",
+        "reason": "ENTRY_MOMENTUM_WEAK",
+        "details": [
+          "{\"passed\":false,\"reason\":\"ENTRY_MOMENTUM_WEAK\",\"samples\":3,\"reserveGrowthPercent\":112.714218791668,\"latestReserveGrowthPercent\":112.714218791668,\"positiveStepRatio\":0.5,\"reserveDrawdownPercent\":0,\"confirmationSpanMs\":24000,\"roundTripLossPercent\":null}",
+          "mint=0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+          "symbol=CHALK",
+          "observation_count=8",
+          "verified_observation_count=8",
+          "traction_window_seconds=300",
+          "positive_reserve_change_detected=true",
+          "positive_curve_change_detected=true",
+          "traction_pass=true",
+          "exact_failure_reason=NONE"
+        ]
+      },
+      "paperEngineReceivedAtMs": 1791988590536,
+      "tractionDiagnostics": {
+        "observationCount": 8,
+        "verifiedObservationCount": 8,
+        "observations": [
+          {
+            "token": "0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+            "symbol": "CHALK",
+            "sourceEventId": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a:4",
+            "block": 88442783,
+            "blockHash": "0x6dc83d198ecfdfc0c501df2b34f79853eb08dd82e1d9946231d701d89ff9d96b",
+            "timestamp": "2026-10-14T14:36:01.000Z",
+            "reserve": "19300000000000000",
+            "previousReserve": null,
+            "reserveDelta": null,
+            "reserveDeltaPct": null,
+            "curveProgressBps": 45,
+            "previousCurveProgressBps": null,
+            "curveProgressDeltaBps": null,
+            "verificationStatus": "VERIFIED",
+            "quoteStatus": "QUOTE_NOT_REQUESTED"
+          },
+          {
+            "token": "0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+            "symbol": "CHALK",
+            "sourceEventId": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a:4",
+            "block": 88442823,
+            "blockHash": "0x1adb76feb50b837225d690e122485f03b5456d7b621188ee5b9608f7900f75e9",
+            "timestamp": "2026-10-14T14:36:05.000Z",
+            "reserve": "96541380000000000",
+            "previousReserve": "19300000000000000",
+            "reserveDelta": "77241380000000000",
+            "reserveDeltaPct": 400.21440414507776,
+            "curveProgressBps": 229,
+            "previousCurveProgressBps": 45,
+            "curveProgressDeltaBps": 184,
+            "verificationStatus": "VERIFIED",
+            "quoteStatus": "NOT_REQUESTED_TRACTION_GATE"
+          },
+          {
+            "token": "0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+            "symbol": "CHALK",
+            "sourceEventId": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a:4",
+            "block": 88442864,
+            "blockHash": "0x2b416d57e489fb51d10074557618483f6066918d66500792a7daab0e03aa76e5",
+            "timestamp": "2026-10-14T14:36:09.000Z",
+            "reserve": "96541380000000000",
+            "previousReserve": "96541380000000000",
+            "reserveDelta": "0",
+            "reserveDeltaPct": 0,
+            "curveProgressBps": 229,
+            "previousCurveProgressBps": 229,
+            "curveProgressDeltaBps": 0,
+            "verificationStatus": "VERIFIED",
+            "quoteStatus": "NOT_REQUESTED_TRACTION_GATE"
+          },
+          {
+            "token": "0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+            "symbol": "CHALK",
+            "sourceEventId": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a:4",
+            "block": 88442902,
+            "blockHash": "0x744d4e9d79f2d76bcc483ced4ce5e6a43cb657d95ef30d3d6c4f6a4884eda6ad",
+            "timestamp": "2026-10-14T14:36:13.000Z",
+            "reserve": "96541380000000000",
+            "previousReserve": "96541380000000000",
+            "reserveDelta": "0",
+            "reserveDeltaPct": 0,
+            "curveProgressBps": 229,
+            "previousCurveProgressBps": 229,
+            "curveProgressDeltaBps": 0,
+            "verificationStatus": "VERIFIED",
+            "quoteStatus": "ENTRY_CONFIRMATION_INSUFFICIENT"
+          },
+          {
+            "token": "0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+            "symbol": "CHALK",
+            "sourceEventId": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a:4",
+            "block": 88442942,
+            "blockHash": "0x6760e840e4aaad53309ddf928099f7159cbaf528d926f1e7947457a230a20326",
+            "timestamp": "2026-10-14T14:36:17.000Z",
+            "reserve": "96541380000000000",
+            "previousReserve": "96541380000000000",
+            "reserveDelta": "0",
+            "reserveDeltaPct": 0,
+            "curveProgressBps": 229,
+            "previousCurveProgressBps": 229,
+            "curveProgressDeltaBps": 0,
+            "verificationStatus": "VERIFIED",
+            "quoteStatus": "ENTRY_CONFIRMATION_INSUFFICIENT"
+          },
+          {
+            "token": "0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+            "symbol": "CHALK",
+            "sourceEventId": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a:4",
+            "block": 88442984,
+            "blockHash": "0x8615877afc11b1fef86f602b3ce837ae1b3ed14d00b379565b48b01dbfdaa9ad",
+            "timestamp": "2026-10-14T14:36:21.000Z",
+            "reserve": "205357242277695621",
+            "previousReserve": "96541380000000000",
+            "reserveDelta": "108815862277695621",
+            "reserveDeltaPct": 112.714218791668,
+            "curveProgressBps": 488,
+            "previousCurveProgressBps": 229,
+            "curveProgressDeltaBps": 259,
+            "verificationStatus": "VERIFIED",
+            "quoteStatus": "ENTRY_CONFIRMATION_INSUFFICIENT"
+          },
+          {
+            "token": "0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+            "symbol": "CHALK",
+            "sourceEventId": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a:4",
+            "block": 88443021,
+            "blockHash": "0x788698d2044a9f2b1bad86c9d108c1225fbfd4a7bf7d6d7aa9445a210c30e908",
+            "timestamp": "2026-10-14T14:36:25.000Z",
+            "reserve": "205357242277695621",
+            "previousReserve": "205357242277695621",
+            "reserveDelta": "0",
+            "reserveDeltaPct": 0,
+            "curveProgressBps": 488,
+            "previousCurveProgressBps": 488,
+            "curveProgressDeltaBps": 0,
+            "verificationStatus": "VERIFIED",
+            "quoteStatus": "SIZE_NOT_EXECUTABLE"
+          },
+          {
+            "token": "0x7ef473ab101207fce616c2c4f79b852e5d0f81f3",
+            "symbol": "CHALK",
+            "sourceEventId": "0x2717e3ca516e647be7e4f38b22a955fd09f234cbd4b0ffa27b29ce0a8e8b3b7a:4",
+            "block": 88443060,
+            "blockHash": "0xbfc4b03cdbcc998f137433cf076c4d5b76b9723084f614f4cae501a2ff71221e",
+            "timestamp": "2026-10-14T14:36:29.000Z",
+            "reserve": "205357242277695621",
+            "previousReserve": "205357242277695621",
+            "reserveDelta": "0",
+            "reserveDeltaPct": 0,
+            "curveProgressBps": 488,
+            "previousCurveProgressBps": 488,
+            "curveProgressDeltaBps": 0,
+            "verificationStatus": "VERIFIED",
+            "quoteStatus": "QUOTE_NOT_REQUESTED"
+          }
+        ],
+        "tractionWindowSeconds": 300,
+        "positiveReserveChangeDetected": true,
+        "positiveCurveChangeDetected": true,
+        "tractionPass": true,
+        "exactFailureReason": null
+      }
+    },
+    "sizeUsd": 1,
+    "gptheistVerdict": "WATCH",
+    "paperVerdict": "PAPER_REJECT"
+  }
+}

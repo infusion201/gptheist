@@ -1,0 +1,52 @@
+{
+  "provenance": "Frozen local files; not a verified Railway production export. The owner-reported old daily trade rate is not validated by this tape.",
+  "snapshotAt": "2026-10-14T14:36:42.540Z",
+  "windowStart": "2026-10-12T23:36:42.540000+00:00",
+  "archivesRead": 118,
+  "decisionOccurrences": 2716,
+  "distinctLaunches": 40,
+  "reasons": {
+    "STALE_LAUNCH": 1231,
+    "ENTRY_MOMENTUM_WEAK": 213,
+    "INSUFFICIENT_TRACTION": 987,
+    "GPTHEIST_VETO": 240,
+    "SIZE_NOT_EXECUTABLE": 15,
+    "ENTRY_CONFIRMATION_INSUFFICIENT": 10,
+    "ENTRY_CONFIRMATION_INVALID": 19,
+    "BACKFILL_EVENT": 1
+  },
+  "traction": {
+    "TRACTION_HISTORY_INSUFFICIENT": 1442,
+    "passed": 295,
+    "NO_POSITIVE_RESERVE_OR_CURVE_CHANGE": 979
+  },
+  "frames": 118,
+  "firstFrameAt": "2026-10-14T14:28:22.406Z",
+  "lastFrameAt": "2026-10-14T14:36:43.532Z",
+  "buyQuoteRequests": 78,
+  "available": 78,
+  "buySellBlockMismatches": 78,
+  "protocolCreatorFeesBps": {
+    "100/200": 10,
+    "100/300": 2,
+    "100/100": 33,
+    "100/0": 27,
+    "100/250": 6
+  },
+  "entryGasRangeUsd": [
+    0.00993152792,
+    0.010461127600000002
+  ],
+  "recordedFrictionRangePercent": [
+    3.750101665505212,
+    9.813803844751412
+  ],
+  "currentAccount": {
+    "cash": 50,
+    "positions": 0,
+    "residentTrades": 0,
+    "minimumNotional": 1,
+    "equityExposureCap": 1.0
+  },
+  "interpretation": "Quote friction from mismatched blocks is descriptive only, not verified same-block cost or replay profit. Duplicate decision occurrences from repeated scans are not unique candidates. No alternate-sized or pinned historical sell quote was invented."
+}

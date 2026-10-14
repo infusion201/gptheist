@@ -35,7 +35,7 @@ export function fixture() {
       outcome: ["RIO", "LISBON", "PALERMO", "PROFESSOR"].includes(a.name) ? "PASS" : "INFO", message: "TEST full live chain" })),
     deployerResearch: { windowBlocks: 100, priorLaunches: 0, priorGraduations: 0 }
   };
-  const state = { reserve: 2n * eth, real: eth, sellable: 500_000n * eth, fee: 100n, snipe: 0n,
+  const state = { reserve: 2n * eth, real: eth, sellable: 500_000n * eth, fee: 100n, creatorTax:100n, snipe: 0n,
     phase: 0, ready: false, graduated: false, decimals: 18, supply: 1_000_000_000n * eth as bigint | null, identity: token, fail: false, reorg: false,
     headBlock: 2, blockTime: Math.floor(time / 1000), headerReads: 0, chain: "0x1237", usd: { bid: 2000, ask: 2000, timestamp: stamp, source: "TEST ETH/USD" } as UsdRate };
   const methods: string[] = [];
@@ -55,7 +55,7 @@ export function fixture() {
     const results = decoded.args[0].map(c => {
       const selector = c.callData.slice(0, 10);
       let result: Hex | undefined;
-      if (selector === PONS_SELECTORS.getLaunchedToken) result = data(token, curve, deployer, deployer, zero, 2n * eth, 0, 0, 100, 0, state.phase, 0, 0, 0, 1);
+      if (selector === PONS_SELECTORS.getLaunchedToken) result = data(token, curve, deployer, deployer, zero, 2n * eth, 0, 0, state.creatorTax, 0, state.phase, 0, 0, 0, 1);
       if (selector === PONS_SELECTORS.getReserves) result = data(state.reserve, 1_000_000n * eth);
       if (selector === PONS_SELECTORS.realQuoteReserve) result = data(state.real);
       if (selector === PONS_SELECTORS.currentSnipeTaxBps) result = data(state.snipe);

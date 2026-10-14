@@ -1,4 +1,5 @@
 import { ForwardRecorder } from "./paper-forward.js";
+import { entryFunnel } from './paper-entry-diagnostics.js';
 import { MemoryHealth, runtimeLimits, withRpcPriority, rpcWorkStatus } from "./runtime-limits.js";
 import { collectionCounts } from "./paper-retention.js";
 import { accountCapacity } from "./paper-policy.js";
@@ -226,8 +227,14 @@ export class PaperService {
     const blockers = new Map<string, number>();
     for (const d of live) if (d.outcome !== "PAPER_ELIGIBLE") blockers.set(d.reason, (blockers.get(d.reason) ?? 0) + 1);
     const allocationCapUsd = accountCapacity(state).equityUsd * getPaperStrategy(state.config, accountCapacity(state).equityUsd).maxTokenExposurePercent / 100;
+    const sourceStatus=this.sources?.status();
+    const entryGasUsd=sourceStatus?.gas.status==='LIVE'?sourceStatus.gas.estimatedSwapUsd:null;
+    const minimumAllInUsd=entryGasUsd==null?null:state.config.MIN_POSITION_USD+entryGasUsd;
     const entryDiagnostics = { allocationCapUsd, minimumTradeUsd: state.config.MIN_POSITION_USD,
-      accountSizingBlocked: allocationCapUsd < state.config.MIN_POSITION_USD,
+      minimumAllInUsd,entryGasUsd,
+      minimumEquityAtAllocationCapUsd:minimumAllInUsd===null?null:minimumAllInUsd*100/getPaperStrategy(state.config).maxTokenExposurePercent,
+      accountSizingBlocked: state.config.PAPER_STRATEGY_VERSION===5 && minimumAllInUsd!==null?Math.min(allocationCapUsd,accountCapacity(state).availableCapacityUsd)+1e-8<minimumAllInUsd:allocationCapUsd < state.config.MIN_POSITION_USD,
+      ...(state.config.PAPER_STRATEGY_VERSION===5?{funnel:entryFunnel(state)}:{}),
       strategyMode: state.config.PAPER_STRATEGY_VERSION === 5 ? "V5" : state.config.PAPER_STRATEGY_VERSION === 4 ? "SCALP" : "STRICT",
       strategyVersion: state.config.PAPER_STRATEGY_VERSION, currentBlock: state.lastObservedHeadBlock, liveCandidates: live.length,
       discoveryIntervalMs: this.options.discoveryIntervalMs ?? 4000, lastCycleMs: this.lastCycleMs, scanning: !!this.pending,

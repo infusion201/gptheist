@@ -1,0 +1,78 @@
+{
+  "syntheticInfrastructureOnly": true,
+  "containerLimitEnforced": false,
+  "cgroupMemoryMax": "max\n",
+  "nodeHeapLimitMiB": 384,
+  "durationMs": 15898,
+  "cycles": 60,
+  "launches": 720,
+  "networkFailures": 17,
+  "restarts": 1,
+  "initial": {
+    "rss": 92012544,
+    "heapTotal": 53256192,
+    "heapUsed": 20536520,
+    "external": 2466583,
+    "arrayBuffers": 211619
+  },
+  "peakRss": 390713344,
+  "sustainedRss": 356741120,
+  "final": {
+    "rss": 356741120,
+    "heapTotal": 215617536,
+    "heapUsed": 89479752,
+    "external": 2400943,
+    "arrayBuffers": 145939,
+    "pressure": "NORMAL",
+    "eventLoopDelayMs": 131.284992,
+    "elapsedMs": 15889,
+    "counts": {
+      "activeCandidates": 128,
+      "candidateObservations": 12800,
+      "processedTokens": 384,
+      "quoteRecords": 320,
+      "activityEvents": 200,
+      "openPositions": 5,
+      "closedTrades": 100,
+      "equityRecords": 250
+    }
+  },
+  "peakPending": 32,
+  "peakCandidates": 128,
+  "limits": {
+    "candidates": 128,
+    "observations": 100,
+    "rejections": 100,
+    "quoteSamples": 128,
+    "rpcConcurrency": 6,
+    "pendingRpc": 128
+  },
+  "samples": [
+    {
+      "rss": 288264192,
+      "heapTotal": 223866880,
+      "heapUsed": 103257432,
+      "external": 13201226,
+      "arrayBuffers": 10421478,
+      "pressure": "NORMAL",
+      "eventLoopDelayMs": 585.842688,
+      "elapsedMs": 7651,
+      "counts": {
+        "activeCandidates": 128,
+        "candidateObservations": 12800,
+        "processedTokens": 240,
+        "quoteRecords": 325,
+        "activityEvents": 200,
+        "openPositions": 5,
+        "closedTrades": 100,
+        "equityRecords": 111
+      }
+    }
+  ],
+  "acceptance": {
+    "rssBelow500MiB": true,
+    "sustainedBelow650MiB": true,
+    "activePositionsPreserved": true,
+    "queueDrained": true
+  }
+}
